@@ -27,6 +27,10 @@ public class AutoOhjelma {
 		System.out.println("Huippunopeus: " + auto3.nopeus + " km/h");
 		System.out.println("Tankin tilavuus: " + auto3.tankki + " litraa");
 		System.out.println();
+		
+		System.out.println(auto1);
+		System.out.println(auto2);
+		System.out.println(auto3);
 	}
 
 }

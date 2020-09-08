@@ -14,6 +14,10 @@ public class Auto {
 		this.tankki = tankki;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Auto [valmistaja=" + valmistaja + ", rekNro=" + rekNro + ", vari=" + vari + ", nopeus=" + nopeus
+				+ ", tankki=" + tankki + "]";
+	}
 
 }
