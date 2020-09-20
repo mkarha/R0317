@@ -44,7 +44,7 @@ public class Kayttoliittyma {
 		ikkuna.add(paneeli);		
 		
 		//M‰‰ritell‰‰n syˆttˆkentti‰ varten ruudukko, johon kent‰t sijoitetaan
-		//M‰‰ritell‰‰n layoutiksi GriLayout, jonka koko on 2x2 ruutua
+		//M‰‰ritell‰‰n layoutiksi GriLayout, jonka koko on 4x3 ruutua
 		JComponent syottokentat = new JPanel();
 		GridLayout ruudukko = new GridLayout(4, 3);
 		syottokentat.setLayout(ruudukko);
