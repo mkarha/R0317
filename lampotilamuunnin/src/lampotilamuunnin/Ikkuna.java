@@ -19,19 +19,12 @@ import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
 public class Ikkuna {
- 
 	private JFrame ikkuna;
-
-	public Ikkuna (int leveys, int korkeus) {
-		ikkuna = new JFrame();
-		ikkuna.setSize(leveys, korkeus);  
-		ikkuna.setTitle("Celsius to Fahrenheit Converter");
-		ikkuna.setLocationRelativeTo(null);	
-	}
-	
+ 
 	public Ikkuna() {
 		
 		//Luodaan 400x150 kokoinen ikkuna
+		ikkuna = new JFrame();
 		ikkuna = new JFrame();
 		ikkuna.setSize(500, 80);  
 		ikkuna.setTitle("Celsius to Fahrenheit Converter");
@@ -43,6 +36,7 @@ public class Ikkuna {
 		//asetetaan luotu gridi ikkunan layoutiksi
 		ikkuna.setLayout(ruutupohja);
 		
+		//layout celsius-labelin tekstille
 		BorderLayout reunaLayout = new BorderLayout();
 		
 		
@@ -55,6 +49,7 @@ public class Ikkuna {
 		JButton muunna = new JButton("Convert");
 		JLabel fahrenheit = new JLabel("  Fahrenheit: ");
 		
+		//Celsius-labelin tekstin kohdistaminen oikealle
 		paneeli.add(celsius, BorderLayout.EAST);
 
 			
@@ -87,21 +82,14 @@ public class Ikkuna {
 		ikkuna.add(muunna);
 		ikkuna.add(fahrenheit);
 		
+		//Ikkuna n‰kyv‰ksi ja sulkemisen m‰‰rittely
 		ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 		ikkuna.setVisible(true);		
 				
 	}
 	
-	public void naytaIkkuna() {
-		this.ikkuna.setDefaultCloseOperation(this.ikkuna.EXIT_ON_CLOSE);
-		this.ikkuna.setVisible(true);
-	}
-	
-	public void lisaaKomponentti(JComponent component) {
-		this.ikkuna.add(component);
-	}
-	
 	public JFrame luoIkkuna() {
+		//ikkunan palautus p‰‰ohjelmasta kutsuttaessa
 		return this.ikkuna;
 	}
 
