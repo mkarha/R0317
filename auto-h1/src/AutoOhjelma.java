@@ -1,4 +1,4 @@
-
+//testluokka auto-olion testaamiseen
 public class AutoOhjelma {
 
 	public static void main(String[] args) {
