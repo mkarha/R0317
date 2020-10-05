@@ -133,13 +133,10 @@ public class PeliIkkuna {
 	
 	
 	private void kirjainToiminnallisuus(String sana, KeyEvent k) {
-		System.out.println(k);
-    	//System.out.println(sanat.getArvatut());
-        int key = k.getKeyCode();
+		int key = k.getKeyCode();
         String kirjain = k.toString();
         char merk = k.getKeyChar();
         String arvaukset = sanat.getArvatut();
-        System.out.println(arvaukset);
         if (sanat.tarkastaSana(key, 1)==false) {
 			ohje.setText("Syötä ainoastaan kirjaimia a-z");
 		}
