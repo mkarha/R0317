@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Scanner;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -25,7 +26,6 @@ public class PeliIkkuna {
 	private JFrame ikkuna;
 	private JLabel ratkaistava; //-----
 	private JLabel ohje;	//Ohjeteksti
-	private JButton tarkista;
 	private JTextArea arvaus; //kirjoitusalue
 	private JLabel kuva; //Kuva-alue
 	private JLabel arvatut; //Arvatut kirjaimet
@@ -33,11 +33,13 @@ public class PeliIkkuna {
 	private Sana sanat;
 	private Paaikkuna paaikkuna;
 	private JButton poistu;
+	private Tarkastaja tarkastaja;
 	
 	public void luoPeliIkkuna(String sana) { 
 		this.kuvat = new Kuva();
 		this.sanat = new Sana();
 		this.paaikkuna = new Paaikkuna();
+		this.tarkastaja = new Tarkastaja();
 				
 		//Luodaan 800x500 pikselin kokoinen ikkuna,
 		//Sijoitetaan ikkuna keskelle näyttöä
@@ -66,7 +68,6 @@ public class PeliIkkuna {
 		this.arvaus = new JTextArea();
 		this.arvaus.setRows(1);
 		this.arvatut = new JLabel("Arvattu: " + sanat.getArvatut());
-		this.tarkista = new JButton("Tarkista"); //Tarkistusnamiska
 		this.kuva = new JLabel(kuvat.getKuva());
 		this.arvatut.setFont(arvatut.getFont().deriveFont((float) 30.0)); //arvattujen koko
 		this.arvatut.setBorder(new EmptyBorder(new Insets(0, 20, 10, 0))); //reunat arvattujen ympärille
@@ -76,7 +77,7 @@ public class PeliIkkuna {
 		paneeli.setBorder(new EmptyBorder(new Insets(150, 75, 150, 75)));
 		paneeli.add(ohje);
 		paneeli.add(arvaus);
-		paneeli.add(tarkista);
+	
 			
 		//Lisätään sisältö alapaneeliin
 		alapaneeli.add(arvatut, BorderLayout.WEST);
@@ -86,23 +87,13 @@ public class PeliIkkuna {
 		this.arvaus.addKeyListener
 	      (new KeyAdapter() {
 	          public void keyPressed(KeyEvent k) {
-	            int key = k.getKeyCode();	            
-	            if (key == KeyEvent.VK_ENTER) {	            	           	
-	            	String syote = arvaus.getText().replace("\n", "");
-	            	arvaus.setText(syote);
-	            	enter(sana);
-	            }
+	        	
+	        	  kirjainToiminnallisuus(sana, k);
+	            
 	         }
 	      });
 		
 		
-		//Määritellään tarkista-napin toiminnallisuus
-		this.tarkista.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				tarkistaPainettu(sana);
-			}			
-		});
 			
 		//määritellään poistu napin toiminnallisuus
 		this.poistu.addActionListener(new ActionListener() {
@@ -127,59 +118,58 @@ public class PeliIkkuna {
 	
 	
 	//Enterin painalluksen määrittely
-	private void enter(String sana) {
+	private void poistuminen(String sana) {
 		if (sana.equals(this.sanat.getPiilosana()) || this.kuvat.getVirheet()==10) {
-			poistu.doClick();
-		}else
-			tarkista.doClick();		
+			this.arvaus.addKeyListener
+		      (new KeyAdapter() {
+		          public void keyPressed(KeyEvent k) {
+		        	
+		        	  poistu.doClick(20);
+		            
+		         }
+		      });
+		}	
 	}
 	
 	
-	//Tarkista-napin ja arvauskentässä enterin käytännön toiminnnallisuus
-	private void tarkistaPainettu(String sana) throws StringIndexOutOfBoundsException{ ////Poikkeuksen heitto muotoilunkäsittelyn vuoksi (Enterin poisto)
-		String kirjain = this.arvaus.getText();
-		kirjain = kirjain.replace("\n", "");
-		char k = kirjain.charAt(0);
-		if (kirjain.length()>1) {
-			this.ohje.setText("Syötä vain yksi kirjain kerrallaan");
-		}					
-		else if (sanat.tarkastaSana(kirjain, 1)==false) {
-			this.ohje.setText("Syötä ainoastaan kirjaimia a-z");
+	private void kirjainToiminnallisuus(String sana, KeyEvent k) {
+		System.out.println(k);
+    	//System.out.println(sanat.getArvatut());
+        int key = k.getKeyCode();
+        String kirjain = k.toString();
+        char merk = k.getKeyChar();
+        String arvaukset = sanat.getArvatut();
+        System.out.println(arvaukset);
+        if (sanat.tarkastaSana(key, 1)==false) {
+			ohje.setText("Syötä ainoastaan kirjaimia a-z");
 		}
-		else if(sanat.getArvatut().contains(kirjain)) {
-			this.ohje.setText("Olet jo arvannut " + kirjain + ":n. Valitse toinen kirjain");
+		else if(tarkastaja.onkoKirjainta(arvaukset.length(), merk, arvaukset)) {
+			ohje.setText("Olet jo arvannut " + k.getKeyChar() + ":n. Valitse toinen kirjain");
 		}
-		else if (sanat.onkoKirjainta(sana.length(), k, sana)==false) {
-			this.kuvat.lisaaVirhe();
-			this.kuva.setIcon(kuvat.getKuva());
-			this.arvatut.setText("Arvattu: " + sanat.getArvatut());
+		else if (this.sanat.onkoKirjainta(sana.length(), merk, sana)==false) {
+			kuvat.lisaaVirhe();
+			kuva.setIcon(kuvat.getKuva());
+			arvatut.setText("Arvattu: " + sanat.getArvatut());
 		}else {
-			this.ratkaistava.setText(sanat.getPiilosana());
-			this.arvatut.setText("Arvattu: " + sanat.getArvatut());
+			ratkaistava.setText(sanat.getPiilosana());
+			arvatut.setText("Arvattu: " + sanat.getArvatut());
 		}
-		this.arvaus.setText(""); //Tyhjennetään arvaus-kentän teksti
+		arvaus.setText(""); //Tyhjennetään arvaus-kentän teksti
 		
 		//Jos sana vastaa arvauksista muodostunutta sanaa
-		if(sana.equals(this.sanat.getPiilosana())) {
-			this.kuva.setIcon(kuvat.voitto()); //Haetaan voitto-kuva
-			this.tarkista.setAction(null); //Poistetaan tarksita-napin toiminnallisuus
+		if(sana.equals(sanat.getPiilosana())) {
+			kuva.setIcon(kuvat.voitto()); //Haetaan voitto-kuva
+			poistuminen(sana);
 		}
 		
 		//jos virheraja saavutetaan
-		if(this.kuvat.getVirheet()==10) {
-			this.ratkaistava.setText(sana);
-			this.tarkista.setAction(null);
-			this.arvaus.setActionMap(null);
+		if(kuvat.getVirheet()==10) {
+			ratkaistava.setText(sana);
+			arvaus.setActionMap(null);
+			poistuminen(sana);
 		}
-		
-		/*
-		//Tarkistetaan onko enteristä jäänyt jämiä
-		String testi = this.arvaus.getText();
-		if(testi.charAt(0)==(KeyEvent.VK_ENTER)){
-			this.arvaus.remove(KeyEvent.VK_ENTER);
-		}
-		*/
 	}
+
 	
 
 }

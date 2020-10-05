@@ -25,6 +25,7 @@ public class Syottoikkuna {
 		sanat.lataa();
 		Paaikkuna paaikkuna = new Paaikkuna();
 		PeliIkkuna peli = new PeliIkkuna();
+		Tarkastaja tarkastaja = new Tarkastaja();
 		
 		//Luodaan 300x100 pikselin kokoinen ikkuna,
 		//Sijoitetaan ikkuna keskelle näyttöä
@@ -77,7 +78,7 @@ public class Syottoikkuna {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String sana = omasana.getText();
-				if(sanat.tarkastaSana(sana, sana.length())==false) {
+				if(tarkastaja.tarkastaSana(sana, sana.length())==false) {
 					ohje.setText("Sana saa sisältää vain kirjaimia a-z");
 				}
 				else if (sanat.onkoSanaJoOlemassa(sana)==false) {

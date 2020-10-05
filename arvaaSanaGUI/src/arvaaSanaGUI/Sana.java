@@ -1,5 +1,6 @@
 package arvaaSanaGUI;
 
+import java.awt.event.KeyEvent;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -91,11 +92,11 @@ public class Sana {
 	}
  	
  	/*tarkistetaan syöte laittomien merkkien osalta*/
-	public boolean tarkastaSana(String sana, int pituus) {
+	public boolean tarkastaSana(int c, int pituus) {
 		int i = 0;
 		int tark = 0;
 			for (i=0; i<pituus; i++) {
-				char c = sana.charAt(i);
+				//char c = sana.charAt(i);
 	            if (c < 0x2d || (c >= 0x2e && c <= 0x40) || (c > 0x5a && c <= 0x60) || c > 0x7a) {
 	            	tark = 1;    		            	
 	            }
@@ -113,7 +114,7 @@ public class Sana {
  	 */
  	public boolean onkoKirjainta(int pituus, char kirjain, String merkkijono) {
  		StringBuilder piilo = new StringBuilder(this.piilosana);
- 		this.arvatut += " " + kirjain + " " ;
+ 		this.arvatut += " " + (Character.toString(kirjain)) + " ";
  		int tarkistus = 0;
  		int i = 0;
  		char syote = Character.toLowerCase(kirjain);
@@ -131,9 +132,10 @@ public class Sana {
 			return true;
  	}
  	
+ 	
  	//Arvattujen kirjainten palautus
  	public String getArvatut() {
- 		return this.arvatut;
+ 		return this.arvatut.toString();
  	}
  	
  	//piilosanan palautus
