@@ -86,7 +86,6 @@ public class PeliIkkuna {
 	         }
 	      });
 		
-		
 			
 		//m‰‰ritell‰‰n poistu napin toiminnallisuus
 		this.poistu.addActionListener(new ActionListener() {

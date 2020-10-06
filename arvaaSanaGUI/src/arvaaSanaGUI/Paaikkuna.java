@@ -136,6 +136,8 @@ public class Paaikkuna {
 		this.paaikkuna.setVisible(true);
 		
 	}
+	
+	
 
 
 
