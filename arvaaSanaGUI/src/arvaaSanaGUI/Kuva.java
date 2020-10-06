@@ -1,17 +1,12 @@
 package arvaaSanaGUI;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class Kuva{
 	
 	//private HashMap<String, String> kuvat;
 	private ArrayList<ImageIcon> vaarat;
-	private JLabel nayttokuva;
 	private int virhe;
 
 	//Alustetaan virhekuvat Araylistiin

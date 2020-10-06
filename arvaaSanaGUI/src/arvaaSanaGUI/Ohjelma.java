@@ -7,7 +7,10 @@ public class Ohjelma {
 		Paaikkuna paaikkuna = new Paaikkuna();
 		
 		paaikkuna.luoIkkuna();
-		paaikkuna.naytaIkkuna();
+		
+		
+		
+		
 
 	}
 

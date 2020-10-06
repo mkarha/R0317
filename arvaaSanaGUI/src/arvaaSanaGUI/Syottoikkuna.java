@@ -78,7 +78,10 @@ public class Syottoikkuna {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String sana = omasana.getText();
-				if(tarkastaja.tarkastaSana(sana, sana.length())==false) {
+				if(sana.length()<3) {
+					ohje.setText("Sanassa tulee olla vähintään 3 kirjainta");
+				}
+				else if(tarkastaja.tarkastaSana(sana, sana.length())==false) {
 					ohje.setText("Sana saa sisältää vain kirjaimia a-z");
 				}
 				else if (sanat.onkoSanaJoOlemassa(sana)==false) {
@@ -91,6 +94,7 @@ public class Syottoikkuna {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								peli.luoPeliIkkuna(sana); //Luodaan peli-ikkuna
+								ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 								ikkuna.setVisible(false);
 							}
 						});
@@ -107,7 +111,7 @@ public class Syottoikkuna {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				paaikkuna.luoIkkuna();
-				paaikkuna.naytaIkkuna();
+				ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 				ikkuna.setVisible(false);				
 			}
 			

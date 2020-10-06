@@ -1,6 +1,5 @@
 package arvaaSanaGUI;
 
-import java.awt.event.KeyEvent;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;

@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 public class Paaikkuna {
@@ -41,9 +40,6 @@ public class Paaikkuna {
 		BorderLayout sijoittelija = new BorderLayout();  
 		this.paaikkuna.setLayout(sijoittelija);
 		
-		
-		JPanel paneeli = new JPanel();
-		BorderLayout paneeliSijoittelija = new BorderLayout();
 		
 		JPanel nappipaneeli = new JPanel();
 		GridLayout napit = new GridLayout(1,3);
@@ -90,7 +86,9 @@ public class Paaikkuna {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				paaikkuna.setVisible(false);
+				paaikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+				paaikkuna.setVisible(true);
+				System.exit(0);
 			}
 			
 		});
@@ -102,6 +100,7 @@ public class Paaikkuna {
 			public void actionPerformed(ActionEvent e) {
 				String sana = sanat.arvoSana(); //arvotaan satunnainen sana
 				peli.luoPeliIkkuna(sana); //Luodaan peli-ikkuna
+				paaikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 				paaikkuna.setVisible(false); //Suljetaan p‰‰ikkuna
 				
 			}
@@ -114,6 +113,7 @@ public class Paaikkuna {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				syotto.luoIkkuna();
+				paaikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 				paaikkuna.setVisible(false);
 			}
 			
@@ -134,10 +134,8 @@ public class Paaikkuna {
 		this.paaikkuna.setVisible(true);
 		
 	}
-	
-	//Palautteaan ikkuna
-	public JFrame naytaIkkuna() {
-		return paaikkuna;
-	}
+
+
+
 }
 
