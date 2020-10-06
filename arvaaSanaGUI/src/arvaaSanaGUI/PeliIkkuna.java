@@ -39,7 +39,7 @@ public class PeliIkkuna {
 		this.ikkuna = new JFrame();  
 		this.ikkuna.setSize(800, 500);  
 		this.ikkuna.setLocationRelativeTo(null);
-		this.ikkuna.setTitle("Arvaa sana");
+		this.ikkuna.setTitle("Hirsipuu");
 		
 		//Luodaan paneeli kirjaimen valitsemiselle ja siihen liittyvälle ohjeelle sekä tarkistusnapille
 		JPanel paneeli = new JPanel();

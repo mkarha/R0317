@@ -34,7 +34,8 @@ public class Paaikkuna {
 		this.paaikkuna = new JFrame();  
 		this.paaikkuna.setSize(800, 500); 
 		this.paaikkuna.setLocationRelativeTo(null);
-		this.paaikkuna.setTitle("Arvaa sana");
+		this.paaikkuna.setTitle("Hirsipuu");
+		
 				
 		//M‰‰ritell‰‰n p‰‰ikkunan layoutiksi BorderLayout
 		BorderLayout sijoittelija = new BorderLayout();  
@@ -52,7 +53,7 @@ public class Paaikkuna {
 		
 		
 		//Esittelyteksti	
-		JLabel rivi0 = new JLabel("Tervetuloa ArvaaSana-peliin!");
+		JLabel rivi0 = new JLabel("Tervetuloa Hirsipuu-peliin!");
 		JLabel rivi1 = new JLabel("Pelin ideana on arvata kirjaimia ja niiden avulla");
 		JLabel rivi2 = new JLabel("selvitt‰‰ piilossa oleva sana.");
 		JLabel rivi3 = new JLabel("Mik‰li arvaamaasi kirjainta ei lˆydy sanasta, virhetilisi karttuu.");
@@ -75,8 +76,9 @@ public class Paaikkuna {
 		ohjepaneeli.add(rivi5);
 		
 		//Luodaan sis‰llˆt
-		JLabel otsikko = new JLabel("Arvaa sana");
+		JLabel otsikko = new JLabel("Hirsipuu");
 		otsikko.setFont(otsikko.getFont().deriveFont((float) 30.0));
+		otsikko.setBorder(new EmptyBorder(new Insets(30, 100, 0, 30)));
 		JButton poistu = new JButton("Poistu");
 		JButton arvoSana = new JButton("Arvo sana");
 		JButton omaSana = new JButton("Lis‰‰ oma sana");
