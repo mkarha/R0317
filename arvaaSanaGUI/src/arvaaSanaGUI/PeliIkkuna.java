@@ -18,7 +18,8 @@ public class PeliIkkuna {
 	
 	private JFrame ikkuna;
 	private JLabel ratkaistava; //-----
-	private JLabel ohje;	//Ohjeteksti
+	private JLabel ohje1;	//Ohjeteksti
+	private JLabel ohje2;
 	private JTextArea arvaus; //kirjoitusalue
 	private JLabel kuva; //Kuva-alue
 	private JLabel arvatut; //Arvatut kirjaimet
@@ -57,8 +58,13 @@ public class PeliIkkuna {
 		this.ratkaistava = new JLabel(piilosana);
 		this.ratkaistava.setFont(ratkaistava.getFont().deriveFont((float) 60.0)); //----- koko
 		this.ratkaistava.setBorder(new EmptyBorder(new Insets(10, 200, 0, 0))); //------n ympärille tyhjää reunaa
-		this.ohje = new JLabel("syötä arvattava kirjain tekstikenttään");
+		this.ohje1 = new JLabel("syötä arvattava kirjain");		
+		this.ohje1.setFont(ratkaistava.getFont().deriveFont((float) 20.0)); 
+		this.ohje2 = new JLabel("tekstikenttään");		
+		this.ohje2.setFont(ratkaistava.getFont().deriveFont((float) 20.0)); 
 		this.arvaus = new JTextArea();
+		this.arvaus.setSize(40, 20);
+		this.arvaus.setFont(ratkaistava.getFont().deriveFont((float) 30.0)); 
 		this.arvaus.setRows(1);
 		this.arvatut = new JLabel("Arvattu: " + sanat.getArvatut());
 		this.kuva = new JLabel(kuvat.getKuva());
@@ -67,8 +73,9 @@ public class PeliIkkuna {
 		this.poistu = new JButton("Palaa alkuun"); //Paluu nappi
 		
 		//Määritellään tyhjät reunat tekstinsyötön ympärille ja lisätään sisältö paneeliin
-		paneeli.setBorder(new EmptyBorder(new Insets(150, 75, 150, 75)));
-		paneeli.add(ohje);
+		paneeli.setBorder(new EmptyBorder(new Insets(100, 80, 150, 20)));
+		paneeli.add(ohje1);
+		paneeli.add(ohje2);
 		paneeli.add(arvaus);
 	
 			
@@ -129,10 +136,12 @@ public class PeliIkkuna {
         char merk = k.getKeyChar();
         String arvaukset = sanat.getArvatut();
         if (sanat.tarkastaSana(key, 1)==false) {
-			ohje.setText("Syötä ainoastaan kirjaimia a-z");
+			ohje1.setText("Syötä ainoastaan kirjaimia");
+			ohje2.setText("a-z:n väliltä.");
 		}
 		else if(tarkastaja.onkoKirjainta(arvaukset.length(), merk, arvaukset)) {
-			ohje.setText("Olet jo arvannut " + k.getKeyChar() + ":n. Valitse toinen kirjain");
+			ohje1.setText("Olet jo arvannut " + k.getKeyChar() + ":n.");
+			ohje1.setText("Valitse toinen kirjain");
 		}
 		else if (this.sanat.onkoKirjainta(sana.length(), merk, sana)==false) {
 			kuvat.lisaaVirhe();
