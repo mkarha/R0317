@@ -5,7 +5,6 @@ import javax.swing.ImageIcon;
 
 public class Kuva{
 	
-	//private HashMap<String, String> kuvat;
 	private ArrayList<ImageIcon> vaarat;
 	private int virhe;
 
