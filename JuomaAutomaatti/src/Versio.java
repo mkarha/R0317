@@ -31,8 +31,8 @@ public class Versio extends Ikkuna{
 		tiedot.setBackground(Color.YELLOW);
 		
 		//tiedot
-		JLabel tekija = teeLabel("Tekijä: MikeD", 20);
-		tekija.setBorder(new EmptyBorder(new Insets(50, 75, 0, 50)));		
+		JLabel tekija = teeLabel("Tekijä: Mikko Karhavirta", 15);
+		tekija.setBorder(new EmptyBorder(new Insets(50, 50, 0, 0)));		
 		JLabel ohjelma = teeLabel("Juoma-automaatti", 30);	
 		ohjelma.setBorder(new EmptyBorder(new Insets(30, 10, 0, 0)));
 		JLabel versio = teeLabel("versio 4", 10);
@@ -63,7 +63,6 @@ public class Versio extends Ikkuna{
 		JLabel label = new JLabel(sisalto);
 		label.setFont(label.getFont().deriveFont((float) koko));
 		return label;
-	}
-		
+	}		
 	
 }
