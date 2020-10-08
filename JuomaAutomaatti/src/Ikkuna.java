@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 
+//ikkuna on automaatti-luokan yliluokka
 public class Ikkuna extends JFrame{
 	
 	private int width;
@@ -7,6 +8,7 @@ public class Ikkuna extends JFrame{
 	
 	private String title;
 	
+	//konstruktori
 	public Ikkuna (int width, int height, String title) {
 		this.setSize(width, height);;
 		this.width = width;
@@ -16,10 +18,18 @@ public class Ikkuna extends JFrame{
 		this.setLocationRelativeTo(null);
 	}
 	
+	//n‰yt‰-metodilla n‰ytet‰‰n ikkuna
 	public void nayta() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		this.setVisible(true);
 	}
-		
 	
+	public void piilota() {
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		this.setVisible(false);
+	}
+	
+	public void poistu() {
+		System.exit(0);
+	}
 }
