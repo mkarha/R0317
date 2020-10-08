@@ -20,7 +20,7 @@ public class Ikkuna extends JFrame{
 	
 	//n‰yt‰-metodilla n‰ytet‰‰n ikkuna
 	public void nayta() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
 		this.setVisible(true);
 	}	
 	
@@ -49,7 +49,7 @@ public class Ikkuna extends JFrame{
 	}
 
 	public void piilota() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
 		this.setVisible(false);
 	}
 	
