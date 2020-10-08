@@ -15,6 +15,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -30,14 +32,16 @@ public class Automaatti extends Ikkuna{
 	private JLabel kahviMaara;
 	private JLabel teeMaara;
 	private JLabel kaakaoMaara;
-	
+	private String tiedosto;
+		
 	public Automaatti(int width, int height, String title) {
 		super(width, height, title);
 		
 		kahvi = new Kahvi("Kahvi", 50);
 		tee = new Tee("Tee", 50);
 		kaakao = new Kaakao("Kaakao", 50);
-		
+		tiedosto = "juomaautomaatit";
+
 		//Yläpalkin ja -valikon luominen ja täyttäminen olioilla
 		JMenuBar ylapalkki = new JMenuBar();
 		JMenu ylavalikko = new JMenu("Ylläpito");
@@ -122,6 +126,13 @@ public class Automaatti extends Ikkuna{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				lataa();
+			}
+		});
+		
+		i6.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);;
 			}
 		});
 		
@@ -223,7 +234,6 @@ public class Automaatti extends Ikkuna{
 	}
 	
 	public void teePaivitys() {
-		tee.osta();
 		if (tee.getLkm()<20) {
 			teeMaara.setForeground(Color.RED);
 		}else {
@@ -236,7 +246,6 @@ public class Automaatti extends Ikkuna{
 	}
 	
 	public void kaakaoPaivitys() {
-		kaakao.osta();
 		if (kaakao.getLkm()<20) {
 			kaakaoMaara.setForeground(Color.RED);
 		}else {
@@ -272,49 +281,28 @@ public class Automaatti extends Ikkuna{
 	//Juoma-automaatin tallennus tiedostoon
 	public void tallennus() {
 		JFrame ponnahdus = new JFrame();
-		String tiedosto = JOptionPane.showInputDialog(ponnahdus, "Anna tallennettavan automaatin nimi. Sallitut merkit: a-z ja 1-9");
-		int pituus = tiedosto.length();
+		String automaatti = JOptionPane.showInputDialog(ponnahdus, "Anna tallennettavan automaatin nimi.");
 		
-		for (int i=0; i<pituus; i++) {
-			char c = tiedosto.charAt(i);
-            if (c > 0x09 && c < 0x2d || (c >= 0x2e && c <= 0x40) || (c > 0x5a && c <= 0x60) || c > 0x7a) {
-            	JOptionPane.showMessageDialog(ponnahdus,"Vain merkkejä a-z ja 1-9","Alert",JOptionPane.WARNING_MESSAGE);
-				ponnahdus.setVisible(false);
-            	return; 		            	
-            }else  {        
-                if (onkoTiedostoJoOlemassa(tiedosto)==true) {
-                   JOptionPane.showMessageDialog(ponnahdus,"saman niminen tiedosto on jo olemassa.","Alert",JOptionPane.WARNING_MESSAGE);
-                   ponnahdus.setVisible(false);
-                   return; 		            	
-                } 
-                   
-            	String lisattava = "";
-            	try (PrintWriter kirjoittaja = new PrintWriter(tiedosto)) {
-            		lisattava += kahvi.getNimi() + ": " + kahvi.getLkm() +"\n";
-            		lisattava += tee.getNimi() + ": " + tee.getLkm() +"\n";
-            		lisattava += kaakao.getNimi() + ": " + kaakao.getLkm() +"\n";
-                    kirjoittaja.print(lisattava);
-                    kirjoittaja.close();  
-                                        
-                    try (PrintWriter lisaaja = new PrintWriter("juomaautomaatit.lst")) {
-                       String lisays = tiedosto +",\n";                
-                       lisaaja.print(lisays);
-                       lisaaja.close();    
-                       JOptionPane.showMessageDialog(ponnahdus,"Tallennus onnistui","Alert",JOptionPane.WARNING_MESSAGE);
-                       return;
-                    } catch (Exception e) {
-                		JOptionPane.showMessageDialog(ponnahdus,"Tallennus epäonnistui osittain","Alert",JOptionPane.WARNING_MESSAGE); 
-                    }
-                    
-                    JOptionPane.showMessageDialog(ponnahdus,"Tallennus onnistui","Alert",JOptionPane.WARNING_MESSAGE); 
-                    return;
-                    
-            	}            		
-            	catch (Exception x){
-            		JOptionPane.showMessageDialog(ponnahdus,"Tallennus epäonnistui","Alert",JOptionPane.WARNING_MESSAGE); 
-
-            	}
-            }
+		if (onkoTiedostoJoOlemassa(tiedosto)==true) {
+			JOptionPane.showMessageDialog(ponnahdus,"saman niminen automaatti on jo olemassa.","Alert",JOptionPane.WARNING_MESSAGE);
+			ponnahdus.setVisible(false);
+            return; 		            	
+		}            
+        String lisattava = "";
+        try {
+        	FileWriter fileWriter = new FileWriter(tiedosto, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);                    	
+        	lisattava += automaatti +" = ";  
+        	lisattava += kahvi.getNimi() + ": " + kahvi.getLkm() +", ";
+        	lisattava += tee.getNimi() + ": " + tee.getLkm() +", ";
+       		lisattava += kaakao.getNimi() + ": " + kaakao.getLkm() +"\n";            
+            bufferedWriter.write(lisattava);
+            bufferedWriter.close();                
+            JOptionPane.showMessageDialog(ponnahdus,"Tallennus onnistui","Alert",JOptionPane.WARNING_MESSAGE);
+            return;                                        
+        }            		
+        catch (Exception x){
+        	JOptionPane.showMessageDialog(ponnahdus,"Tallennus epäonnistui","Alert",JOptionPane.WARNING_MESSAGE);   
        	}		
 	}
 	
@@ -322,72 +310,74 @@ public class Automaatti extends Ikkuna{
 	//Juoma-automaatin lataaminen tiedostosta
 	public void lataa() {
 		JFrame ponnahdus = new JFrame();
-		String tiedosto = JOptionPane.showInputDialog(ponnahdus, "Anna ladattavan automaatin nimi. Sallitut merkit: a-z ja 1-9");
-		if (tiedosto.length()>0) {
-			    
-		for (int i=0; i<tiedosto.length(); i++) {
-			char c = tiedosto.charAt(i);
-            if (c > 0x09 && c < 0x2d || (c >= 0x2e && c <= 0x40) || (c > 0x5a && c <= 0x60) || c > 0x7a) {
-            	System.out.println(c);
-            	JOptionPane.showMessageDialog(ponnahdus,"Vain merkkejä a-z ja 1-9","Alert",JOptionPane.WARNING_MESSAGE);
-				ponnahdus.setVisible(false);
-            	return; 		            	
-            }else 
-
-            	try(Scanner tiedostonLukija = new Scanner(Paths.get(tiedosto))){
+		String automaatti = JOptionPane.showInputDialog(ponnahdus, "Anna ladattavan automaatin nimi.");
+		if (automaatti.length()>0) {
+			try(Scanner tiedostonLukija = new Scanner(Paths.get(tiedosto))){
             		
-            		while(tiedostonLukija.hasNextLine()){
-            			String rivi = tiedostonLukija.nextLine();
-            			String[] palat = rivi.split(",");
-            			
-            			String tuote = palat[0];
-            			System.out.println(tuote);
-            			String[] palaset = tuote.split(": ");
-            			String nimi = palaset[0];
-            			int lkm = Integer.valueOf(palaset[1]);
-            			System.out.println(nimi);
-            			System.out.println(lkm);
-            			if (nimi.equals("Kahvi")) {
-            				kahvi.setLkm(lkm);
-            				kahviPaivitys();
-            			}else if(nimi.equals("Tee")) {
-            				tee.setLkm(lkm);
-            				teePaivitys();
-            			}else
-            				kaakao.setLkm(lkm);
-            				kaakaoPaivitys();
-            		}
-            	} catch (Exception e){  
-        	
-            		JOptionPane.showMessageDialog(ponnahdus,""+tiedosto+" nimistä tiedostoa ei ole olemassa.","Alert",JOptionPane.WARNING_MESSAGE);
-            		ponnahdus.setVisible(false);
+				while(tiedostonLukija.hasNextLine()){
+					String rivi = tiedostonLukija.nextLine();
+					String[] palat = rivi.split(" = "); 
+					String tomaatti = palat[0];
+					if (tomaatti.equals(automaatti)) {
+						      
+						String tuotteet = palat[1];
+						System.out.println(tuotteet);						
+						String[] palaset = tuotteet.split(", ");
+						System.out.println(palaset);						
+						ArrayList<String> pt = new ArrayList<>();					
+						pt.add(palaset[0]);
+						pt.add(palaset[1]);
+						pt.add(palaset[2]);
+						
+						for (int i=0; i<pt.size(); i++) {
+							String p = pt.get(i);
+							String[] t = p.split(": ");
+							String nimi = t[0];
+							int lkm = Integer.valueOf(t[1]);
+							System.out.println(nimi);
+							System.out.println(lkm);
+							if (nimi.equals("Kahvi")) {
+								kahvi.setLkm(lkm);
+								kahviPaivitys();
+							}else if(nimi.equals("Tee")) {
+								tee.setLkm(lkm);
+								teePaivitys();
+							}else
+								kaakao.setLkm(lkm);
+	            				kaakaoPaivitys();
+						}
+					}
             	}
+            } 		
+			catch (Exception e){          	
+            		JOptionPane.showMessageDialog(ponnahdus,""+tiedosto+" nimistä tiedostoa ei ole olemassa.","Alert",JOptionPane.WARNING_MESSAGE);
+            		ponnahdus.setVisible(false);            
         	}
-		}
-		
+		}		
 	}
 	
 	
-	//Tarkistaa onko tiedoston nimeä vastaava tiedosto jo olemassa
-    public boolean onkoTiedostoJoOlemassa(String tiedosto){
-    	try(Scanner tiedostonLukija = new Scanner(Paths.get("juomaautomaatit.lst"))){
+	//Tarkistaa onko automaatin nimeä vastaava automaatti jo olemassa
+    public boolean onkoTiedostoJoOlemassa(String automaatti){
+    	try(Scanner tiedostonLukija = new Scanner(Paths.get(tiedosto))){
             while(tiedostonLukija.hasNextLine()){
                 String rivi = tiedostonLukija.nextLine();
-                String[] palat = rivi.split(",");
-                String sana = palat[0];
-                	if (sana.equals(tiedosto)) {
+                String[] palat = rivi.split(" = ");
+                               
+                String tomaatti = palat[0];
+				
+                
+                	if (tomaatti.equals(automaatti)) {
                 		return true;
                 	}
             }
         } catch (Exception e){  
         	JFrame ponnahdus = new JFrame();
-        	JOptionPane.showMessageDialog(ponnahdus,"Vain merkkejä a-z ja 1-9","Alert",JOptionPane.WARNING_MESSAGE);
+        	JOptionPane.showMessageDialog(ponnahdus,"Lukeminen epäonnistui.","Alert",JOptionPane.WARNING_MESSAGE);
 			ponnahdus.setVisible(false);
         	return false; 	
-        }
-    	
-        return false;
-    		
+        }    	
+        return false;    		
 	}
 	
 	

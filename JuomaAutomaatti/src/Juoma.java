@@ -29,7 +29,7 @@ public class Juoma {
 	}
 	
 	public void setLkm(int lkm) {
-		if(lkm>=0 ) {
+		if(lkm>0 ) {
 			this.lkm = lkm;
 		}
 	}
