@@ -124,7 +124,7 @@ public class Syottoikkuna {
 		ikkuna.add(omasana, BorderLayout.CENTER);
 		ikkuna.add(paneeli, BorderLayout.SOUTH);
 	
-		this.ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		this.ikkuna.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
 		this.ikkuna.setVisible(true);
 	}
 }

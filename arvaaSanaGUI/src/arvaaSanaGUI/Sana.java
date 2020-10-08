@@ -31,14 +31,10 @@ public class Sana {
                 String sana = palat[0];
                 
                 onkoSanaJoOlemassa(sana);
-                
-                
             }
         } catch (Exception e){
-        	
-            
-        }
-        
+        	            
+        }        
     }
     
     //tallentaa sanat tiedostoon, mikäli oma sana lisätty

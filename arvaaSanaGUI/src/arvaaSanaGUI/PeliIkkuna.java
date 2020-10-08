@@ -58,18 +58,23 @@ public class PeliIkkuna {
 		this.ratkaistava = new JLabel(piilosana);
 		this.ratkaistava.setFont(ratkaistava.getFont().deriveFont((float) 60.0)); //----- koko
 		this.ratkaistava.setBorder(new EmptyBorder(new Insets(10, 200, 0, 0))); //------n ympärille tyhjää reunaa
+		
 		this.ohje1 = new JLabel("syötä arvattava kirjain");		
 		this.ohje1.setFont(ratkaistava.getFont().deriveFont((float) 20.0)); 
 		this.ohje2 = new JLabel("tekstikenttään");		
 		this.ohje2.setFont(ratkaistava.getFont().deriveFont((float) 20.0)); 
+		
 		this.arvaus = new JTextArea();
 		this.arvaus.setSize(40, 20);
 		this.arvaus.setFont(ratkaistava.getFont().deriveFont((float) 30.0)); 
 		this.arvaus.setRows(1);
-		this.arvatut = new JLabel("Arvattu: " + sanat.getArvatut());
+		
 		this.kuva = new JLabel(kuvat.getKuva());
+		
+		this.arvatut = new JLabel("Arvattu: " + sanat.getArvatut());
 		this.arvatut.setFont(arvatut.getFont().deriveFont((float) 30.0)); //arvattujen koko
 		this.arvatut.setBorder(new EmptyBorder(new Insets(0, 20, 10, 0))); //reunat arvattujen ympärille
+		
 		this.poistu = new JButton("Palaa alkuun"); //Paluu nappi
 		
 		//Määritellään tyhjät reunat tekstinsyötön ympärille ja lisätään sisältö paneeliin
@@ -110,7 +115,7 @@ public class PeliIkkuna {
 		this.ikkuna.add(kuva, BorderLayout.EAST);
 		this.ikkuna.add(alapaneeli, BorderLayout.SOUTH);
 					
-		this.ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		this.ikkuna.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
 		this.ikkuna.setVisible(true);		
 	}
 	
