@@ -28,6 +28,12 @@ public class Juoma {
 		this.lkm += lkm;
 	}
 	
+	public void setLkm(int lkm) {
+		if(lkm>=0 ) {
+			this.lkm = lkm;
+		}
+	}
+	
 	public int getLkm() {
 		return this.lkm;
 	}
