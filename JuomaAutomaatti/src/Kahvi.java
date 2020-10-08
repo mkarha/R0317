@@ -1,4 +1,4 @@
-import javax.swing.ImageIcon;
+
 
 public class Kahvi extends Juoma{
 		

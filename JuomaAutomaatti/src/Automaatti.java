@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -45,7 +46,8 @@ public class Automaatti extends Ikkuna{
 		//Yl‰palkin ja -valikon luominen ja t‰ytt‰minen olioilla
 		JMenuBar ylapalkki = new JMenuBar();
 		JMenu ylavalikko = new JMenu("Yll‰pito");
-		JMenuItem i1, i2, i3, i4, i5, i6, i7;
+		JMenu tietoja = new JMenu("Tietoja");
+		JMenuItem i1, i2, i3, i4, i5, i6, i7, versio, ohje;
 		i1 = new JMenuItem("Aseta kahvin m‰‰r‰");
 		i2 = new JMenuItem("Aseta teen m‰‰r‰");
 		i3 = new JMenuItem("Aseta kaakaon m‰‰r‰");
@@ -53,6 +55,8 @@ public class Automaatti extends Ikkuna{
 		i5 = new JMenuItem("Lataa automaatti");
 		i6 = new JMenuItem("Alusta automaatti");
 		i7 = new JMenuItem("Sulje automaatti");
+		versio = new JMenuItem("Versio");
+		ohje = new JMenuItem("Ohje");
 		
 		//yl‰valikon komponenttien lis‰ys yl‰valikkoon
 		ylavalikko.add(i1);
@@ -62,9 +66,12 @@ public class Automaatti extends Ikkuna{
 		ylavalikko.add(i5);
 		ylavalikko.add(i6);
 		ylavalikko.add(i7);
+		tietoja.add(versio);
+		tietoja.add(ohje);
 		
 		//yl‰valikon lis‰ys yl‰palkkiin
-		ylapalkki.add(ylavalikko);		
+		ylapalkki.add(ylavalikko);	
+		ylapalkki.add(tietoja);
 		
 		//ikkunoiden muotoilua
 		JPanel automaattiOsio = new JPanel();
@@ -154,6 +161,25 @@ public class Automaatti extends Ikkuna{
 			public void actionPerformed(ActionEvent e) {
 				poistu();
 			}
+		});
+		
+		versio.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Versio versioIkkuna = new Versio(400, 300, "Versiotiedot");
+				versioIkkuna.nayta();
+			}			
+		});
+		
+		ohje.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Ohje ohjeIkkuna = new Ohje(500, 400, "Ohjeet");
+				ohjeIkkuna.nayta();				
+			}
+			
 		});
 		
 		//Kuvakkeiden toiminnallisuus
@@ -400,9 +426,7 @@ public class Automaatti extends Ikkuna{
                 	}
             }
         } catch (Exception e){  
-        	JFrame ponnahdus = new JFrame();
-        	JOptionPane.showMessageDialog(ponnahdus,"Lukeminen ep‰onnistui.","Alert",JOptionPane.WARNING_MESSAGE);
-			ponnahdus.setVisible(false);
+        	
         	return false; 	
         }    	
         return false;    		

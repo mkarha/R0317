@@ -1,11 +1,11 @@
 import javax.swing.JFrame;
 
 //ikkuna on automaatti-luokan yliluokka
+
 public class Ikkuna extends JFrame{
 	
 	private int width;
-	private int height;
-	
+	private int height;	
 	private String title;
 	
 	//konstruktori
@@ -22,8 +22,32 @@ public class Ikkuna extends JFrame{
 	public void nayta() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		this.setVisible(true);
-	}
+	}	
 	
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public void piilota() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		this.setVisible(false);
