@@ -94,7 +94,7 @@ public class Syottoikkuna {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								peli.luoPeli(sana); //Luodaan peli-ikkuna
-								//ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+								ikkuna.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 								//peli.setVisible(true);
 								ikkuna.setVisible(false);
 							}

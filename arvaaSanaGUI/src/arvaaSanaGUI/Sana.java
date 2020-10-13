@@ -109,7 +109,7 @@ public class Sana {
  	 */
  	public boolean onkoKirjainta(int pituus, char kirjain, String merkkijono) {
  		StringBuilder piilo = new StringBuilder(this.piilosana);
- 		this.arvatut += " " + (Character.toString(kirjain)) + " ";
+ 		this.arvatut += " " + (Character.toString(kirjain));
  		int tarkistus = 0;
  		int i = 0;
  		char syote = Character.toLowerCase(kirjain);

@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class PeliIkkuna {
@@ -20,7 +20,7 @@ public class PeliIkkuna {
 	private JLabel ratkaistava; //-----
 	private JLabel ohje1;	//Ohjeteksti
 	private JLabel ohje2;
-	private JTextArea arvaus; //kirjoitusalue
+	private JTextField arvaus; //kirjoitusalue
 	private JLabel kuva; //Kuva-alue
 	private JLabel arvatut; //Arvatut kirjaimet
 	private Kuva kuvat;
@@ -64,10 +64,9 @@ public class PeliIkkuna {
 		this.ohje2 = new JLabel("tekstikentt‰‰n");		
 		this.ohje2.setFont(ratkaistava.getFont().deriveFont((float) 20.0)); 
 		
-		this.arvaus = new JTextArea();
+		this.arvaus = new JTextField(1);
 		this.arvaus.setSize(40, 20);
 		this.arvaus.setFont(ratkaistava.getFont().deriveFont((float) 30.0)); 
-		this.arvaus.setRows(1);
 		
 		this.kuva = new JLabel(kuvat.getKuva());
 		
@@ -121,15 +120,13 @@ public class PeliIkkuna {
 	
 	
 	
-	//Enterin painalluksen m‰‰rittely
+	//Viieisen arvauksen j‰lkeisen painalluksen m‰‰rittely
 	private void poistuminen(String sana) {
 		if (sana.equals(this.sanat.getPiilosana()) || this.kuvat.getVirheet()==10) {
 			this.arvaus.addKeyListener
 		      (new KeyAdapter() {
 		          public void keyPressed(KeyEvent k) {
-		        	
-		        	  poistu.doClick(20);
-		            
+		        	  poistu.doClick(20);		            
 		         }
 		      });
 		}	
@@ -140,15 +137,24 @@ public class PeliIkkuna {
 		int key = k.getKeyCode();
         char merk = k.getKeyChar();
         String arvaukset = sanat.getArvatut();
+        arvaus.setText(""); //Tyhjennet‰‰n arvaus-kent‰n teksti
         if (sanat.tarkastaSana(key, 1)==false) {
 			ohje1.setText("Syˆt‰ ainoastaan kirjaimia");
 			ohje2.setText("a-z:n v‰lilt‰.");
+			return;
 		}
 		else if(tarkastaja.onkoKirjainta(arvaukset.length(), merk, arvaukset)) {
 			ohje1.setText("Olet jo arvannut " + k.getKeyChar() + ":n.");
-			ohje1.setText("Valitse toinen kirjain");
+			ohje2.setText("Ole hyv‰ ja valitse toinen kirjain");
+			return;
 		}
-		else if (this.sanat.onkoKirjainta(sana.length(), merk, sana)==false) {
+		else {
+			this.ohje1.setText("syˆt‰ arvattava kirjain");	
+			this.ohje2.setText("tekstikentt‰‰n");		
+		}
+        
+        
+		if (this.sanat.onkoKirjainta(sana.length(), merk, sana)==false) {
 			kuvat.lisaaVirhe();
 			kuva.setIcon(kuvat.getKuva());
 			arvatut.setText("Arvattu: " + sanat.getArvatut());
@@ -156,7 +162,7 @@ public class PeliIkkuna {
 			ratkaistava.setText(sanat.getPiilosana());
 			arvatut.setText("Arvattu: " + sanat.getArvatut());
 		}
-		arvaus.setText(""); //Tyhjennet‰‰n arvaus-kent‰n teksti
+		
 		
 		//Jos sana vastaa arvauksista muodostunutta sanaa
 		if(sana.equals(sanat.getPiilosana())) {
