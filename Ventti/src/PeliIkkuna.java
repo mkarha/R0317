@@ -1,21 +1,15 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -23,34 +17,21 @@ import javax.swing.border.EmptyBorder;
 public class PeliIkkuna extends Ikkuna{
 	
 	private ImageIcon kuva;
-	private String pTunnus, p1tunnus, p2tunnus, p3tunnus, p4tunnus, jakaja;
-	private Pelaaja pelaaja, pelaaja1, pelaaja2, pelaaja3, jakajaP;
-	private Kortti kortti;
-	private Kasi kasi;
-	private ArrayList<JPanel> siirto;
-	private ArrayList<JLabel> pelaajanTulosRuudut;
-	private JPanel vasen, oikea, p1, p2, p3, jakajaPaneeli, oikeaYla, oikeaKeski, oikeaAla, oikeaAlaOikea, oikeaAlaVasen;
+	private String pTunnus, jakaja;
+	private Pelaaja pelaaja, p;
+	private JPanel vasen, p2, jakajaPaneeli, oikeaYla, oikeaKeski, oikeaAla;
 	private JMenuBar menu;
 	
 	private JButton nosta, jaa;
 	private JTextArea teksti;
-	//private HashMap<String, JLabel> korttiRuudut;
-	//private HashMap<String, JPanel> pelaajaRuudut;
-	private Peli peli;
-
+	
 	public PeliIkkuna(int width, int height, String title, ArrayList<String> pelaajat, HashMap <Integer, JLabel> korttiRuudut, Peli peli) {
 		super(width, height, title);
-		
-		//alustetaan pelaaja-muuttuja
-		pelaaja = new Pelaaja();
-		this.peli = peli;
-		
+
+		this.pelaaja = new Pelaaja();
 		//M‰‰ritell‰‰n p‰‰ikkunan layout
 		BorderLayout paaikkunaAsettelu = new BorderLayout();
 		this.setLayout(paaikkunaAsettelu);
-		
-		int pelaajienLkm = pelaajat.size();
-		System.out.println(pelaajienLkm);
 		
 		//Luodaan yl‰palkki ja yl‰valikko asetuksille
 		Ylapalkki ylapalkki = new Ylapalkki();
@@ -68,12 +49,7 @@ public class PeliIkkuna extends Ikkuna{
 		GridLayout eiAktiivisetPelaajatAsettelu = new GridLayout(3, 1);
 		eiAktiivisetPelaajat.setLayout(eiAktiivisetPelaajatAsettelu);
 			
-		/*for (int i=1; i<pelaajaRuudut.size(); i++) {
-			eiAktiivisetPelaajat.add(pelaajaRuudut.get(i));
-		}
-		*/
-		//J‰rjestet‰‰n pelaajaruudut listaan  tulevaa vuoronmukaista siirtely‰ varten
-		pelaajanTulosRuudut = new ArrayList<>();
+		new ArrayList<>();
 		
 		//Keskialueen alustus ja muotoilun m‰‰rittely
 		JPanel keskiAlue = new JPanel();
@@ -91,7 +67,7 @@ public class PeliIkkuna extends Ikkuna{
 				jakaja = pelaajat.get(i);					//asetetaan jakajaksi i:nnen alkion nimi
 				Kasi jakajanKasi = peli.getPelaajanKasi("Jakaja");
 				String arvo = peli.getSyote(jakajanKasi.getArvo());
-				jakajaP = new Pelaaja(jakaja, jakajanKasi.getKorttienMaara(), jakajanKasi.getArvo()); //jakaja ei ole talletettuna tiedostoon, joten luodaan uusi jakaja-niminen pelaaja
+				Pelaaja jakajaP = new Pelaaja(jakaja, jakajanKasi.getKorttienMaara(), jakajanKasi.getArvo()); //jakaja ei ole talletettuna tiedostoon, joten luodaan uusi jakaja-niminen pelaaja
 				jakajaPaneeli = luoPelaajaRuutu();			//luodaan jakajan tiedoille JPaneeli
 				JLabel jakajaNaama = lisaaPelaajanKuva("/kuvat/banker.jpg"); //asetetaan jakajalle kuvake
 				JLabel jakajaNimi = new JLabel(jakaja + ": ");	//asetetaan jakajan nimi
@@ -134,12 +110,13 @@ public class PeliIkkuna extends Ikkuna{
 		BoxLayout oikeaAsettelu = new BoxLayout(oikea, BoxLayout.Y_AXIS);
 		oikea.setLayout(oikeaAsettelu);
 		
-		//Luodaan p‰‰ikkunan oikealle puolelle 3 paneelia p‰‰llekk‰in
-		//Ylin paneeli sis‰lt‰‰ 5 ruutua vierekk‰in jaettavien korttien ikoneja varten
-		//Keskimm‰inen paneeli 4 ruutua kortteja varten
-		//alimmaisessa ruudussa on pelin k‰yttˆnapit "nosta lis‰‰" ja "j‰‰"
-		
-		//ylimm‰n komanneksen t‰yttˆ ja muotoilu
+		/*Luodaan p‰‰ikkunan oikealle puolelle 3 paneelia p‰‰llekk‰in
+		*Ylin paneeli sis‰lt‰‰ 5 ruutua vierekk‰in jaettavien korttien ikoneja varten
+		*Keskimm‰inen paneeli 4 ruutua kortteja varten
+		*alimmaisessa ruudussa on pelin k‰yttˆnapit "nosta lis‰‰" ja "j‰‰"
+		*
+		*ylimm‰n komanneksen t‰yttˆ ja muotoilu
+		**/
 		oikeaYla = new JPanel();
 		BoxLayout oikeaYlaAsettelu = new BoxLayout(oikeaYla, BoxLayout.X_AXIS);
 		oikeaYla.setLayout(oikeaYlaAsettelu);
@@ -204,7 +181,6 @@ public class PeliIkkuna extends Ikkuna{
 		jaa.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("painettu j‰‰-nappia");
 				if (peli.getLoppu()) {
 					ylapalkki.painaExit();
 				}
@@ -246,6 +222,8 @@ public class PeliIkkuna extends Ikkuna{
 		return panel;
 	}
 	
+	
+	//Asetellaan nimi ja tulos pelaajaruutuun
 	public JPanel nimiJaTulosAsettelu(JPanel p, JLabel l1, JLabel l2) {
 		JPanel paneeli = p;
 		BoxLayout asettelu = new BoxLayout(paneeli, BoxLayout.X_AXIS);
@@ -268,7 +246,7 @@ public class PeliIkkuna extends Ikkuna{
 		return label;
 	}
 	
-	
+	//Lis‰t‰‰n pelaajaruutuun pelaajan kuva, mik‰li sellainen on m‰‰ritelty
 	public JLabel lisaaPelaajanKuva(String kuvaLahde) {
 		try { //yritet‰‰n ladata kuva
 			kuva = new ImageIcon(this.getClass().getResource(kuvaLahde));
@@ -281,30 +259,14 @@ public class PeliIkkuna extends Ikkuna{
 	}
 	
 	
-
+	//J‰‰ napin painamista imitoiva metodi
 	public void painaJaa () {
 		jaa.doClick();
 	}
 	
-	
+	//Nosta napin painamista imitoiva metodi
 	public void painaNosta() {
 		nosta.doClick();
-	}
-	
-
-	
-	
-	public void korttiPaivitys(HashMap<String, JLabel> hasa) {
-		
-		for (int i=1; i<hasa.size()+1; i++) {
-			if(i<6) {
-				hasa.get(""+i).setIcon(kortti.getKuva());
-			}else {
-				oikeaKeski.add(hasa.get(""+i));
-			}
-			
-			nayta();
-		}
 	}
 	
 }

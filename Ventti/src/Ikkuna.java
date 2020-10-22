@@ -2,16 +2,9 @@ import javax.swing.JFrame;
 
 public class Ikkuna extends JFrame{
 
-	private int width;
-	private int height;	
-	private String title;
-	
 	//konstruktori
 	public Ikkuna (int width, int height, String title) {
 		this.setSize(width, height);;
-		this.width = width;
-		this.height = height;
-		this.title = title;
 		this.setTitle(title);
 		this.setLocationRelativeTo(null);
 	}
@@ -21,41 +14,33 @@ public class Ikkuna extends JFrame{
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
 		this.setVisible(true);
 	}	
-		
-	public int getWidth() {
-		return width;
-	}
+	
 
+	//Leveyden setteri
 	public void setWidth(int width) {
-		this.width = width;
 	}
 
-	public int getHeight() {
-		return height;
-	}
 
+	//Korkeuden setteri
 	public void setHeight(int height) {
-		this.height = height;
 	}
 
-	public String getTitle() {
-		return title;
-	}
+	
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
+	//Piilottaa ikkunan sulkematta ohjelmaa kokonaan
 	public void piilota() {
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
 		this.setVisible(false);
 	}
 	
+	//Sulkee ikkunan
 	public void sulje() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		this.setVisible(false);
 	}
 	
+	
+	//Poistuu koko ohjelmasta ja sulkee kaikki ohjelmaan liittyvät kuuntelijat
 	public void poistu() {
 		System.exit(0);
 	}

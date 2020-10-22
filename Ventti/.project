@@ -21,6 +21,11 @@
 			<location>D:/Ohjelmoinnit/R0317/Ventti/src/kuvat</location>
 		</link>
 		<link>
+			<name>src/kuvat/rauno.jpg</name>
+			<type>1</type>
+			<location>D:/Ohjelmoinnit/R0317/Ventti/src/kuvat/rauno.jpg</location>
+		</link>
+		<link>
 			<name>src/kuvat/tyhja.png</name>
 			<type>1</type>
 			<location>D:/Ohjelmoinnit/R0317/Ventti/src/kuvat/tyhja.png</location>

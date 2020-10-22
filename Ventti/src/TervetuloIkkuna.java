@@ -11,13 +11,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class TervetuloIkkuna extends Ikkuna {
-	private int lkm;
 	private PelaajatIkkuna pelaajat;
 	private ArrayList<String> pelaajaTunnukset;
 	
+	
+	/*Luodaan tervetuloikkuna
+	 * Ikkunalla aloitetaan peli.
+	 * Ikkunassa valitaan osallistuvien pelaajien lukum‰‰r‰.
+	 */
 	public TervetuloIkkuna(int width, int height, String title) {
 		super(width, height, title);
 		
+		//Aluksi luodaan ikkunan komponentit ja muotoillaan asettelu
 		BorderLayout paaAsettelu = new BorderLayout();
 		this.setLayout(paaAsettelu);
 		
@@ -43,6 +48,7 @@ public class TervetuloIkkuna extends Ikkuna {
 		JButton pelaajia2 = new JButton("2 pelaajaa");
 		JButton pelaajia3 = new JButton("3 pelaajaa");
 		
+		//Komponenttien toiminnallsuuksien m‰‰rittely
 		pelaajia1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {		
@@ -64,6 +70,8 @@ public class TervetuloIkkuna extends Ikkuna {
 			}			
 		});
 		
+		
+		//Komponenttien lis‰‰minen paneeleihin
 		valinta.add(pelaajia1);
 		valinta.add(pelaajia2);
 		valinta.add(pelaajia3);
@@ -76,6 +84,17 @@ public class TervetuloIkkuna extends Ikkuna {
 		this.add(valinta, BorderLayout.SOUTH);
 	}
 	
+	
+	/*Metodilla luodaan valittu m‰‰r‰ pelaajia
+	 * Metodi saa parametrin‰‰n valitun pelaajien lukum‰‰r‰n.
+	 * Pelaajatunnukset lis‰t‰‰n taulukkoon.
+	 * Monesko muuttuja kertoo metodin kutsumien pelaajan luonti-ikkunoiden
+	 * yl‰palkissa monennenko pelaajan luominen on menossa.
+	 * Metodi kutsii pelaajatIkkuna.metodia ja antaa sille parametreina
+	 * ikkunan koon, yl‰palkin tekstin sek‰ monettako pelaajaa ollaan
+	 * luomassa,montako pelaajaa on yhteens‰ ja taulukon, johon lis‰t‰‰n
+	 * luodut/ladatut pelaajat.
+	 */
 	public void luoPelaaja(int lkm) {	
 		pelaajaTunnukset = new ArrayList<>();
 		int monesko = 1;

@@ -1,5 +1,3 @@
-import java.awt.Component;
-
 import javax.swing.ImageIcon;
 
 public class Kortti {
@@ -10,12 +8,16 @@ public class Kortti {
 
 	private String kuvaLahde;
 	
+	
+	//Kortin luova parametriton konstruktori
 	public Kortti() {
 		this.maa = 0;
 		this.arvo = 0;
 		this.kuvaLahde = "/kuvat" + this.getMaa() + this.arvo;
 	}
 	
+	
+	//Konstruktori, jossa annetaan kortille maa ja arvo, joiden  avulla haetaan myös kortin kuva
 	public Kortti (int maa, int arvo) {
 		this.maa = maa;
 		this.arvo = arvo;
@@ -26,14 +28,15 @@ public class Kortti {
 		catch (Exception e) {
 			
 		}
-
 	}
 	
+	
+	//Kortin arvon palauttava getteri
 	public int getArvo() {
 		return this.arvo;
 	}
 	
-	//Kortin maan hakeminen
+	//Kortin maan palauttava getteri
 	public String getMaa(){
 	    if (this.maa == 0)
 	    {
@@ -53,16 +56,20 @@ public class Kortti {
 	    }
 	}
 	
+	
+	//Kortin kuvan kivaikonina palauttava getteri
 	public ImageIcon getKuva() {
 		return this.kuvaIso;
 	}
 
+	
+	//Kortin kuvan sijainnin tekstimuodossa palauttava getteri
 	public String getKuvaLahde() {
 		return this.kuvaLahde;
 	}
 	
 
-	
+	//Kortin tietojen palauttaminen tekstimuodossa
 	@Override
 	public String toString() {
 		return this.getMaa() + " " + this.arvo;
