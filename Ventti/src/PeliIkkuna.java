@@ -21,14 +21,17 @@ public class PeliIkkuna extends Ikkuna{
 	private Pelaaja pelaaja, p;
 	private JPanel vasen, p2, jakajaPaneeli, oikeaYla, oikeaKeski, oikeaAla;
 	private JMenuBar menu;
+	private ArrayList<JLabel> pelaajanTulosRuudut, korttiRuudut;
 	
 	private JButton nosta, jaa;
 	private JTextArea teksti;
 	
-	public PeliIkkuna(int width, int height, String title, ArrayList<String> pelaajat, HashMap <Integer, JLabel> korttiRuudut, Peli peli) {
+	public PeliIkkuna(int width, int height, String title, ArrayList<String> pelaajat, ArrayList<JLabel> korttiRuudut, Peli peli) {
 		super(width, height, title);
 
 		this.pelaaja = new Pelaaja();
+		pelaajanTulosRuudut = new ArrayList<>();
+		this.korttiRuudut = korttiRuudut;
 		//M‰‰ritell‰‰n p‰‰ikkunan layout
 		BorderLayout paaikkunaAsettelu = new BorderLayout();
 		this.setLayout(paaikkunaAsettelu);
@@ -71,7 +74,8 @@ public class PeliIkkuna extends Ikkuna{
 				jakajaPaneeli = luoPelaajaRuutu();			//luodaan jakajan tiedoille JPaneeli
 				JLabel jakajaNaama = lisaaPelaajanKuva("/kuvat/banker.jpg"); //asetetaan jakajalle kuvake
 				JLabel jakajaNimi = new JLabel(jakaja + ": ");	//asetetaan jakajan nimi
-				JLabel jakajaTulos = new JLabel("" + arvo); //haetaan jakajan kaden arvo
+				JLabel jakajaTulos = new JLabel("" + arvo);		//haetaan jakajan kaden arvo
+				pelaajanTulosRuudut.add(jakajaTulos);
 				JPanel nimiJaTulosjakaja = new JPanel();	//luodaan jakajan nimi ja tulos label
 				nimiJaTulosjakaja = nimiJaTulosAsettelu(nimiJaTulosjakaja, jakajaNimi, jakajaTulos); //k‰yd‰‰n t‰ytt‰m‰ss‰ label muotoiluineen
 				jakajaPaneeli.add(nimiJaTulosjakaja);		//lis‰t‰‰n nimi ja tulos paneeliin
@@ -81,15 +85,16 @@ public class PeliIkkuna extends Ikkuna{
 				}else {
 					eiAktiivisetPelaajat.add(jakajaPaneeli);	//jos ei, lis‰t‰‰n eiaktiiviset-paneeliin
 				}
-				//pelaajanTulosRuudut.add(jakajaTulos);		
+						
 			}else {											//muut pelaajat kuin jakaja
 				pelaaja = pelaaja.lataaPelaaja(pTunnus);	//ladataan pelaajan nimi
 				p2 = luoPelaajaRuutu();						//k‰ytet‰‰n luo ruutu-metodia pelaaja-paneelin luontiin
 				Kasi pelaajanKasi = peli.getPelaajanKasi(pTunnus);
 				String arvo = peli.getSyote(pelaajanKasi.getArvo());
 				JLabel p2Naama = lisaaPelaajanKuva(pelaaja.getKuvaLahde()); //luodaan pelaajan kuva
-				JLabel p2Nimi = new JLabel(pelaaja.getKayttaja() + ": ");				//luodaan label pelaajan nimelle
+				JLabel p2Nimi = new JLabel(pelaaja.getKayttaja() + ": ");				//luodaan label pelaajan nimelle);
 				JLabel p2Tulos = new JLabel("" + arvo);		//luodaan label pelaajan tulokselle
+				pelaajanTulosRuudut.add(p2Tulos);
 				JPanel nimiJaTulos2 = new JPanel();							//luodaan paneeli nimelle ja tulokselle
 				nimiJaTulos2 = nimiJaTulosAsettelu(nimiJaTulos2, p2Nimi, p2Tulos); //lis‰t‰‰ nimi ja tulos paneeliin
 				p2.add(nimiJaTulos2);								//lis‰t‰‰n nimi ja tulos-paneeli pelaajapaneeliin
@@ -99,6 +104,7 @@ public class PeliIkkuna extends Ikkuna{
 				}else {
 					eiAktiivisetPelaajat.add(p2);	//muuten ei aktiivisiin
 				}
+				
 			}
 		}
 		
@@ -121,11 +127,11 @@ public class PeliIkkuna extends Ikkuna{
 		BoxLayout oikeaYlaAsettelu = new BoxLayout(oikeaYla, BoxLayout.X_AXIS);
 		oikeaYla.setLayout(oikeaYlaAsettelu);
 		
-		JLabel yla1 = korttiRuudut.get(1);
-		JLabel yla2 = korttiRuudut.get(2);
-		JLabel yla3 = korttiRuudut.get(3);
-		JLabel yla4 = korttiRuudut.get(4);
-		JLabel yla5 = korttiRuudut.get(5);
+		JLabel yla1 = this.korttiRuudut.get(0);
+		JLabel yla2 = this.korttiRuudut.get(1);
+		JLabel yla3 = this.korttiRuudut.get(2);
+		JLabel yla4 = this.korttiRuudut.get(3);
+		JLabel yla5 = this.korttiRuudut.get(4);
 		
 		oikeaYla.add(yla1);
 		oikeaYla.add(yla2);
@@ -140,10 +146,11 @@ public class PeliIkkuna extends Ikkuna{
 		BoxLayout oikeaKeskiAsettelu = new BoxLayout(oikeaKeski, BoxLayout.X_AXIS);
 		oikeaKeski.setLayout(oikeaKeskiAsettelu);
 		
-		JLabel keski1 = korttiRuudut.get(6);		
-		JLabel keski2 = korttiRuudut.get(7);
-		JLabel keski3 = korttiRuudut.get(8);
-		JLabel keski4 = korttiRuudut.get(9);
+		JLabel keski1 = this.korttiRuudut.get(5);		
+		JLabel keski2 = this.korttiRuudut.get(6);
+		JLabel keski3 = this.korttiRuudut.get(7);
+		JLabel keski4 = this.korttiRuudut.get(8);
+		
 		
 		oikeaKeski.add(keski1);
 		oikeaKeski.add(keski2);
@@ -173,8 +180,7 @@ public class PeliIkkuna extends Ikkuna{
 		nosta.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				peli.nostaKortti();
-				sulje();	
+				peli.nostaKortti();	
 			}			
 		});
 	
@@ -212,6 +218,16 @@ public class PeliIkkuna extends Ikkuna{
 	
 	}
 
+	//P‰ivitet‰‰n aktiivisen pelaajan tulos
+	public void tulosPaivitys (String tulos) {
+		this.pelaajanTulosRuudut.get(0).setText(tulos);
+	}
+	
+	
+	//P‰ivitet‰‰n korttiruudut
+	public void korttiPaivitys (int ruutu, ImageIcon kuva) {
+		this.korttiRuudut.get(ruutu).setIcon(kuva);
+	}
 	
 	
 	//Luodaan passiivisille pelaajille s‰ilˆt
@@ -268,5 +284,7 @@ public class PeliIkkuna extends Ikkuna{
 	public void painaNosta() {
 		nosta.doClick();
 	}
+	
+	
 	
 }

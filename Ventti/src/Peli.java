@@ -15,7 +15,7 @@ public class Peli {
 	private String pelaaja, arvo;
 	private ArrayList<String> pelaajat;
 	private HashMap<String, Kasi> pelaajienKadet;
-	private HashMap <Integer, JLabel> korttiRuudut;
+	private ArrayList<JLabel> korttiRuudut;
 	private Pakka pakka;
 	private Kortti kortti;
 	private Kasi kasi;
@@ -26,36 +26,35 @@ public class Peli {
 	//Luodaan uusi peli pelaajat taulukon pelaajilla
 	public Peli(ArrayList<String> pelaajat) {
 		this.pelaajia = pelaajat.size(); //montako pelaajaa
-		this.pelaajat = pelaajat; //taulukko my√∂s alametodien k√§ytt√∂√∂n		
+		this.pelaajat = pelaajat; //taulukko myˆs alametodien k‰yttˆˆn		
 		
-		//luodaan pelaajille nimikohtaiset k√§det 
+		//luodaan pelaajille nimikohtaiset k‰det 
 		this.pelaajienKadet = new HashMap<>();
-		for (int i=0; i<this.pelaajia; i++) {	//luodaan jokaiselle pelaajalle oma k√§si
+		for (int i=0; i<this.pelaajia; i++) {	//luodaan jokaiselle pelaajalle oma k‰si
 			this.kasi = new Kasi();
-			this.kasi.setArvo(0); //Asetetaan kunkin pelaajan k√§den arvoksi 0
-			this.pelaajienKadet.put(this.pelaajat.get(i), this.kasi); //pelaajat ja k√§det talteen
+			this.kasi.setArvo(0); //Asetetaan kunkin pelaajan k‰den arvoksi 0
+			this.pelaajienKadet.put(this.pelaajat.get(i), this.kasi); //pelaajat ja k‰det talteen
 		}
 		
-		//Luodaan n√§ytett√§ville korteille ruudut, joita hallitaan pelist√§
-		korttiRuudut = new HashMap <>();
-		for (int i=1; i<10; i++) { //max korttim√§√§r√§ 9
+		//Luodaan n‰ytett‰ville korteille ruudut, joita hallitaan pelist‰
+		korttiRuudut = new ArrayList<>();
+		for (int i=1; i<10; i++) { //max korttim‰‰r‰ 9
 			JLabel label = luoTyhjaRuutu(); //alustetaan kaikki ruudut tyhjiksi
-			korttiRuudut.put(i, label); //korttiruudut talteen
+			korttiRuudut.add(label); //korttiruudut talteen
 		}
-	
 		
 		this.pakka = new Pakka(); //otetaan uusi pakka
 		this.vuoro = 0; //vuoro alussa 0
-		this.monesko = 0; //korttim√§√§r√§ alussa 0
-		this.arvo = ""; //arvo palautetaan tekstimuodossa lab elille. Alku arvo tyhj√§ + int arvo 0
+		this.monesko = 0; //korttim‰‰r‰ alussa 0
+		this.arvo = ""; //arvo palautetaan tekstimuodossa lab elille. Alku arvo tyhj‰ + int arvo 0
 		this.peliIkkuna = new PeliIkkuna(1280, 800, "Ventti", pelaajat, korttiRuudut, this);  //luodaan uusi peli-ikkuna 
 		this.loppu = false;
 	}
 	
 		
-		//Luodaan tyhj√§t ruudut korttien paikoille ennen jakoa
+		//Luodaan tyhj‰t ruudut korttien paikoille ennen jakoa
 		public JLabel luoTyhjaRuutu() {
-			try { //yritet√§√§n ladata tyhj√§ kuva
+			try { //yritet‰‰n ladata tyhj‰ kuva
 				kuva = new ImageIcon(this.getClass().getResource("/kuvat/tyhja.png"));
 			}
 			catch (Exception e) {
@@ -68,7 +67,7 @@ public class Peli {
 		
 		
 		public JLabel lisaaPelaajanKuva(Pelaaja pelaaja) {
-			try { //yritet√§√§n ladata kuva
+			try { //yritet‰‰n ladata kuva
 				kuva = pelaaja.getKuva();
 			}
 			catch (Exception e) {
@@ -91,20 +90,22 @@ public class Peli {
 	*Jakaja suorittaa metodin jokaisen kortin kohdalla
 	**/
 	public void nostaKortti() {
-		monesko++;													//lis√§t√§√§n k√§dess√§ olevien korttien m√§√§r√§√§
+		
 		this.pelaaja = this.pelaajat.get(0);						//Pelaaja pelaajat vuorossa oleva pelaaja
-		int indeksi = (int)(Math.random()*(this.pakka.getKorttejaPakassa()));	//Arvotaan indeksi pakassa j√§ljell√§ olevista korteista
+		int indeksi = (int)(Math.random()*(this.pakka.getKorttejaPakassa()));	//Arvotaan indeksi pakassa j‰ljell‰ olevista korteista
 		this.kortti = this.pakka.jaaKortti(indeksi);						//jaetan kortti
-		korttiRuudut.put(monesko, peliIkkuna.lisaaPelaajanKuva(this.kortti.getKuvaLahde()));
+		korttiRuudut.add(peliIkkuna.lisaaPelaajanKuva(this.kortti.getKuvaLahde()));
+		this.peliIkkuna.korttiPaivitys(monesko, this.kortti.getKuva());
+		monesko++;
+															//lis‰t‰‰n k‰dess‰ olevien korttien m‰‰r‰‰
 		this.pakka.poistaKorttiPakasta(indeksi);							//poistetaan jaettu kortti pakasta
-		this.kasi = this.pelaajienKadet.get(this.pelaaja);				//ladataan kierroksen pelaajan k√§si
-		this.kasi.lisaaKortti(this.kortti);									//Lis√§t√§√§n k√§teen jaettu kortti
-		this.pelaajienKadet.put(this.pelaaja, this.kasi);				//Talletetaan pelaajatunnuksen mukaan k√§si
-		this.kasi = this.pelaajienKadet.get(this.pelaaja);				//ladataan kierroksen pelaajan k√§si p√§ivitettyn√§
-		peliIkkuna.sulje();
-		peliIkkuna = new PeliIkkuna(1280, 800, "Ventti", pelaajat, korttiRuudut, this);
-		naytaPeli();
-		//mik√§li p√§ivitetyn k√§den arvo on yli 21 vaihdetaan vuoroa
+		this.kasi = this.pelaajienKadet.get(this.pelaaja);				//ladataan kierroksen pelaajan k‰si
+		this.kasi.lisaaKortti(this.kortti);									//Lis‰t‰‰n k‰teen jaettu kortti
+		this.pelaajienKadet.put(this.pelaaja, this.kasi);				//Talletetaan pelaajatunnuksen mukaan k‰si
+		this.kasi = this.pelaajienKadet.get(this.pelaaja);				//ladataan kierroksen pelaajan k‰si p‰ivitettyn‰
+		this.peliIkkuna.tulosPaivitys(""+this.kasi.getArvo());
+		
+		//mik‰li p‰ivitetyn k‰den arvo on yli 21 vaihdetaan vuoroa
 		if (this.kasi.getArvo()>21) {									
 			lopetaVuoro();			
 		}
@@ -113,29 +114,42 @@ public class Peli {
 	
 	
 	/*Vuoron lopetus
-	*suoritetaan kun pelaaja painaa"j√§√§"-nappia peli-ikkunassa
+	*suoritetaan kun pelaaja painaa"j‰‰"-nappia peli-ikkunassa
 	*
 	*Katsotaan kuka on seuraavana vuorossa. Jos vuorossa on jakaja, suoritetaan jakajan toiminnot.
-	*Uusi vuoro. Lis√§t√§√§n vuoro-muuttujan arvoa ja kerrotaan seuraava pelaaja ponnahdusikkunassa.
-	*J√§rjestet√§√§n pelaajien j√§rjestys uusiksi peli-ikkunan paikkojen vaihtoa varten
-    *Siirret√§√§n ensimm√§inen pelaaja taulukon loppuun.
-    *Lopuksi m√§√§ritet√§√§n k√§dess√§ olevien korttien m√§√§r√§ksi 0 ja alustetaan korttiruudut tyhjiksi.
+	*Uusi vuoro. Lis‰t‰‰n vuoro-muuttujan arvoa ja kerrotaan seuraava pelaaja ponnahdusikkunassa.
+	*J‰rjestet‰‰n pelaajien j‰rjestys uusiksi peli-ikkunan paikkojen vaihtoa varten
+    *Siirret‰‰n ensimm‰inen pelaaja taulukon loppuun.
+    *Lopuksi m‰‰ritet‰‰n k‰dess‰ olevien korttien m‰‰r‰ksi 0 ja alustetaan korttiruudut tyhjiksi.
 	**/
 	public void lopetaVuoro() {
-		pelaaja = this.pelaajat.get(1); 		
+		pelaaja = this.pelaajat.get(1); 
+		
 		if (this.pelaajat.get(0).equals("Jakaja")) {   			
 			jakajanVuoro();
 		}else if(this.vuoro<this.pelaajia) { 
-			this.vuoro++;		
-			JFrame ponnahdus = new JFrame(); 
-			JOptionPane.showMessageDialog(ponnahdus, pelaaja, "Alert",JOptionPane.WARNING_MESSAGE);
-       		ponnahdus.setVisible(false); 
+			this.vuoro++;
+			if (pelaaja.equals("Jakaja")) {
+							    
+				JFrame ponnahdus = new JFrame(); 
+				int response = JOptionPane.showConfirmDialog(ponnahdus, pelaaja, "Confirm",JOptionPane.DEFAULT_OPTION);
+				if (response == JOptionPane.DEFAULT_OPTION) {					
+						
+					peliIkkuna.painaNosta();
+				}
+				ponnahdus.setVisible(false);
+	       		
+    		}else {			
+    			JFrame ponnahdus = new JFrame(); 
+    			JOptionPane.showMessageDialog(ponnahdus, pelaaja, "Alert",JOptionPane.WARNING_MESSAGE);
+    			ponnahdus.setVisible(false); 
+    		}
 			this.pelaajat.add(this.pelaajat.get(0));			
 			this.pelaajat.remove(0);
 			this.monesko = 0;
        		for (int i=0; i<korttiRuudut.size(); i++) {
        			ImageIcon kuva = null;
-       			try { //yritet√§√§n ladata tyhj√§ kuva
+       			try { //yritet‰‰n ladata tyhj‰ kuva
        				kuva = new ImageIcon(this.getClass().getResource("/kuvat/tyhja.png"));
        			}
        			catch (Exception e) {
@@ -143,25 +157,29 @@ public class Peli {
        			}
        			JLabel label = new JLabel(kuva);
        			label.setBorder(new EmptyBorder(50, 20, 50, 10));
-       			korttiRuudut.put(i, label);
-       		}       		
+       			korttiRuudut.remove(0);
+       			korttiRuudut.add(label);
+       		}  
+       		
+       		
        		peliIkkuna.sulje();
        		peliIkkuna = new PeliIkkuna(1280, 800, "Ventti", pelaajat, korttiRuudut, this);
     		naytaPeli();
+    		
 		}
 	}
 	
 	
 	//Jakajan toiminta
-	/*Alustetaan muuttujat isoinarvo ja verrokki k√§sien arvon vertailua varten ja isoin pelaaja muuttuja 
+	/*Alustetaan muuttujat isoinarvo ja verrokki k‰sien arvon vertailua varten ja isoin pelaaja muuttuja 
 	 * voittajavertailua varten.
-	 * Jakaja on pelaajat taulukon 0. alkio. K√§yd√§√§n l√§pi alkiot 1:st√§ taulukon loppuun.
-	 * Kopioidaan kunkin luettavan alkion pelaajan k√§den arvo verrokki muuttujaan.
-	 * Mik√§li verrokki on suurempi kuin isoinarvo ja pienempi tai yht√§suuri kuin 21, kopioidaan se 
+	 * Jakaja on pelaajat taulukon 0. alkio. K‰yd‰‰n l‰pi alkiot 1:st‰ taulukon loppuun.
+	 * Kopioidaan kunkin luettavan alkion pelaajan k‰den arvo verrokki muuttujaan.
+	 * Mik‰li verrokki on suurempi kuin isoinarvo ja pienempi tai yht‰suuri kuin 21, kopioidaan se 
 	 * isoimmaksi arvoksi.
-	 * Jakaja nostaa kortteja siihen saakka, kunnes jakajan k√§den arvo on sama tai suurempi kuin 
+	 * Jakaja nostaa kortteja siihen saakka, kunnes jakajan k‰den arvo on sama tai suurempi kuin 
 	 * isoin arvo tai jakaja menee yli 21.
-	 * Lopuksi k√§ynnistet√§√§n voittaja-metodi.
+	 * Lopuksi k‰ynnistet‰‰n voittaja-metodi.
 	 */
 		public void jakajanVuoro() {
 			int isoinArvo = 0;
@@ -180,9 +198,9 @@ public class Peli {
 		
 		/*Tarkistetaan voittaja.
 		 * Alustetaan isoin arvo, verrokki ja isoimman pelaajan nimi.
-		 * K√§yd√§√§n l√§pi koko pelaajat-taulukko. 
-		 * Mik√§li kaksi pelaajaa p√§√§tyv√§t samaan k√§den arvoon, jaetaan voitto.
-		 * Paitsi, jos jaettu voitto tulee samalla k√§denarvolla kuin jakajalla, jolloin jakaja voittaa.
+		 * K‰yd‰‰n l‰pi koko pelaajat-taulukko. 
+		 * Mik‰li kaksi pelaajaa p‰‰tyv‰t samaan k‰den arvoon, jaetaan voitto.
+		 * Paitsi, jos jaettu voitto tulee samalla k‰denarvolla kuin jakajalla, jolloin jakaja voittaa.
 		 */
 		public void voittaja() {
 			int isoinArvo = 0;
@@ -206,8 +224,8 @@ public class Peli {
 			//Asetetaan muuttuja loppu todeksi. Muuttaa nappien toiminnallisuutta poistumiseksi ja uudeksi peliksi
 			setLoppu(true);
 			
-			//Ponnautetaan ikkuna, josta selvi√§√§ voittaja
-			//Ilmoituksen alle napit alkuun paluuta ja uutta peli√§ samoilla pelaajilla varten
+			//Ponnautetaan ikkuna, josta selvi‰‰ voittaja
+			//Ilmoituksen alle napit alkuun paluuta ja uutta peli‰ samoilla pelaajilla varten
 			UIManager.put("OptionPane.noButtonText", "Alkuun");
 		    UIManager.put("OptionPane.yesButtonText", "Uusi peli");
 			JDialog.setDefaultLookAndFeelDecorated(false);
@@ -238,25 +256,25 @@ public class Peli {
 	}
 	
 	
-	//Vuoron numeron getteri. Ensimm√§inen vuoro on 0
+	//Vuoron numeron getteri. Ensimm‰inen vuoro on 0
 	public int getVuoro() {
 		return this.vuoro;
 	}
 	
 	
-	//K√§si olion getteri
+	//K‰si olion getteri
 	public Kasi getKasi() {
 		return this.kasi;  
 	}
 	
 	
-	//Tietyn pelaajan k√§den hakeminen
+	//Tietyn pelaajan k‰den hakeminen
 	public Kasi getPelaajanKasi(String nimi) {
 		return this.pelaajienKadet.get(nimi);
 	}
 	
 	
-	//K√§den arvon muuttaminen sy√∂tteeksi ylimenevi√§ tuloksia varten
+	//K‰den arvon muuttaminen syˆtteeksi ylimenevi‰ tuloksia varten
 	public String getSyote (int arvo) {
 		if (arvo < 22) {
 			this.arvo = "" + arvo;
