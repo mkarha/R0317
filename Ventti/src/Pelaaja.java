@@ -202,15 +202,15 @@ public class Pelaaja {
 	 *
 	 */
 	public void tallennaPelaaja(Pelaaja pelaaja) {
-				JFrame ponnahdus = new JFrame();
-				if (onkoPelaajaJoOlemassa(pelaaja.getKayttaja())==true) {
-					JOptionPane.showMessageDialog(ponnahdus,"Käyttäjätunnus on jo käytössä. Ole hyväja valitse toinen käyttäjätunnus.","Alert",JOptionPane.WARNING_MESSAGE);
-					ponnahdus.setVisible(false);
-				        return; 		            	
-				}            
-				String lisattava = "";
-				//yritetään kirjoittaa tiedostoon
-				try {
+		JFrame ponnahdus = new JFrame();
+		if (onkoPelaajaJoOlemassa(pelaaja.getKayttaja())==true) {
+			JOptionPane.showMessageDialog(ponnahdus,"Käyttäjätunnus on jo käytössä. Ole hyväja valitse toinen käyttäjätunnus.","Alert",JOptionPane.WARNING_MESSAGE);
+			ponnahdus.setVisible(false);
+		    return; 		            	
+		}            
+		String lisattava = "";
+		//yritetään kirjoittaa tiedostoon
+		try {
 					FileWriter fileWriter = new FileWriter(tiedosto, true);
 				    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);     
 				    //tallenteen muotoilua

@@ -174,7 +174,7 @@ public class PeliIkkuna extends Ikkuna{
 		this.jaa = new JButton("J‰‰");	  //mahdollisesti stoppi- tai muu ikoni
 		
 		//Nappien toiminnallisuuden m‰‰rittely
-		
+		nappienPaivitys(peli.getLoppu());
 
 		this.nosta.addActionListener(new ActionListener() {
 			@Override
@@ -236,9 +236,11 @@ public class PeliIkkuna extends Ikkuna{
 	}
 	
 	//P‰ivitet‰‰n napit. Nosta nappi uudeksi peliksi ja j‰‰-nappi poistumiseksi
-	public void nappienPaivitys() {
-		this.nosta.setText("Uusi peli");
-		this.jaa.setText("Poistu");
+	public void nappienPaivitys(boolean loppu) {
+		if (loppu) {
+			this.nosta.setText("Uusi peli");
+			this.jaa.setText("Poistu");
+		}
 	}
 	
 	

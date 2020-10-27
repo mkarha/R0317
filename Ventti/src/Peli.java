@@ -11,7 +11,7 @@ public class Peli {
 	
 	private int pelaajia, vuoro, monesko, isoinArvo, verrokki;
 	private String pelaaja, arvo, isoinPelaaja;
-	private ArrayList<String> pelaajat;
+	private ArrayList<String> pelaajat, kiertavat;
 	private HashMap<String, Kasi> pelaajienKadet;
 	private ArrayList<JLabel> korttiRuudut;
 	private Pakka pakka;
@@ -25,6 +25,7 @@ public class Peli {
 	public Peli(ArrayList<String> pelaajat) {
 		this.pelaajia = pelaajat.size(); //montako pelaajaa
 		this.pelaajat = pelaajat; //taulukko myös alametodien käyttöön	
+		this.kiertavat = pelaajat;
 		this.isoinArvo = 0;
 		this.verrokki = 0;
 		this.isoinPelaaja = "";
@@ -92,7 +93,7 @@ public class Peli {
 	**/
 	public void nostaKortti() {
 		
-		this.pelaaja = this.pelaajat.get(0);						//Pelaaja pelaajat vuorossa oleva pelaaja
+		this.pelaaja = this.kiertavat.get(0);						//Pelaaja pelaajat vuorossa oleva pelaaja
 		int indeksi = (int)(Math.random()*(this.pakka.getKorttejaPakassa()));	//Arvotaan indeksi pakassa jäljellä olevista korteista
 		this.kortti = this.pakka.jaaKortti(indeksi);						//jaetan kortti
 		this.peliIkkuna.korttiPaivitys(monesko, this.kortti.getKuva());
@@ -126,14 +127,13 @@ public class Peli {
     *Lopuksi määritetään kädessä olevien korttien määräksi 0 ja alustetaan korttiruudut tyhjiksi.
 	**/
 	public void lopetaVuoro() {
-		this.verrokki = this.pelaajienKadet.get(this.pelaajat.get(0)).getArvo();
+		this.verrokki = this.pelaajienKadet.get(this.kiertavat.get(0)).getArvo();
 		if (this.verrokki < 22 && this.verrokki > this.isoinArvo) {
 				this.isoinArvo = this.verrokki;
 				this.isoinPelaaja = this.pelaajat.get(0);
 			} else if (this.verrokki < 22 && this.verrokki == this.isoinArvo) {
-				if (vuoro == 0 || this.pelaajat.get(0).equals("Jakaja")) {
-					this.isoinPelaaja = 
-							this.pelaajat.get(0);
+				if (vuoro == 0 || this.kiertavat.get(0).equals("Jakaja")) {
+					this.isoinPelaaja = this.kiertavat.get(0);
 				}else {
 					this.isoinPelaaja += " ja " + this.pelaajat.get(0);
 				}
@@ -168,7 +168,6 @@ public class Peli {
        		}  
        		
        		if (this.pelaajat.get(0).equals("Jakaja")) {
-       			peliIkkuna.nappienPaivitys();
        			jakajanVuoro();
        		}
        		
@@ -205,6 +204,7 @@ public class Peli {
 			peliIkkuna.sulje();
        		peliIkkuna = new PeliIkkuna(1280, 800, "Ventti", pelaajat, korttiRuudut, this);
     		naytaPeli();
+
 			if (this.pelaajienKadet.get("Jakaja").getArvo()>this.isoinArvo && this.pelaajienKadet.get("Jakaja").getArvo()<22) {
 				
 				voittaja("Jakaja");
@@ -224,15 +224,11 @@ public class Peli {
 		public void voittaja(String pelaaja) {
 			//Ponnautetaan ikkuna, josta selviää voittaja
 			//Ilmoituksen alle napit alkuun paluuta ja uutta peliä samoilla pelaajilla varten
-			
-			//JDialog dialogi = new JDialog();
-			//UIManager.put("OptionPane.noButtonText", "Alkuun");
-		    //UIManager.put("OptionPane.yesButtonText", "Uusi peli");
-			//dialogi.setDefaultLookAndFeelDecorated(false);
-			
+		
 		    JFrame ponnahdus = new JFrame();
 		    JOptionPane.showMessageDialog(ponnahdus, pelaaja + " voitti!", "Confirm",JOptionPane.DEFAULT_OPTION);
-			ponnahdus.setVisible(false); 		    
+			ponnahdus.setVisible(false); 
+   			
 		}
 		
 	

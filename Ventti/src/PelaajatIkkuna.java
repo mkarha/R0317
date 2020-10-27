@@ -131,8 +131,7 @@ public class PelaajatIkkuna extends Ikkuna{
 		           		ponnahdus.setVisible(false); 
 		           		jatketaan(monesko, lkm, pelaajaTunnukset);
 					}
-				}		
-	
+				}			
 			}
 						
 		});
