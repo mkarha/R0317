@@ -61,6 +61,7 @@ public class Peli {
 		this.arvo = ""; //arvo palautetaan tekstimuodossa lab elille. Alku arvo tyhjä + int arvo 0
 		this.peliIkkuna = new PeliIkkuna(1280, 800, "Ventti", kiertavat, korttiRuudut, this);  //luodaan uusi peli-ikkuna 
 		this.loppu = false;
+		peliIkkuna.nappienPaivitys(loppu);
 	}
 	
 

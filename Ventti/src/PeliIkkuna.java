@@ -241,6 +241,9 @@ public class PeliIkkuna extends Ikkuna{
 		if (loppu) {
 			this.nosta.setText("Uusi peli");
 			this.jaa.setText("Poistu");
+		}else {
+			this.nosta.setText("Nosta");
+			this.jaa.setText("J‰‰");
 		}
 	}
 	
