@@ -2,22 +2,22 @@ package LevyLista;
 
 public class Teos {
 	
-	private String nimi;
 	private String tekija;
+	private String nimi;
 	private int julkaisuvuosi;
 	
 	public Teos() {
 		
 	}
 	 
-	public Teos(String nimi, String tekija, int julkaisuvuosi) {
-		setNimi(nimi);
+	public Teos(String tekija, String nimi, int julkaisuvuosi) {
 		setTekija(tekija);
+		setNimi(nimi);
 		setJulkaisuvuosi(julkaisuvuosi);
 	}
 
 	public String getNimi() {
-		return nimi;
+		return this.nimi;
 	}
 
 	public void setNimi(String nimi) {
@@ -25,7 +25,7 @@ public class Teos {
 	}
 
 	public String getTekija() {
-		return tekija;
+		return this.tekija;
 	}
 
 	public void setTekija(String tekija) {
@@ -33,7 +33,7 @@ public class Teos {
 	}
 
 	public int getJulkaisuvuosi() {
-		return julkaisuvuosi;
+		return this.julkaisuvuosi;
 	}
 
 	public void setJulkaisuvuosi(int julkaisuvuosi) {

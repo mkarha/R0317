@@ -9,8 +9,8 @@ public class Levy extends Teos {
 		
 	}
 	
-	public Levy(String levynNimi, String esittaja, int julkaisuvuosi, String genre, String formaatti) {
-		super(levynNimi, esittaja, julkaisuvuosi);
+	public Levy(String esittaja, String levynNimi, int julkaisuvuosi, String genre, String formaatti) {
+		super(esittaja, levynNimi, julkaisuvuosi);
 		setFormaatti(formaatti);
 		setGenre(genre);
 	}

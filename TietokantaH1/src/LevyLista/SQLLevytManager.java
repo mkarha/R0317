@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+
 public class SQLLevytManager {
 	
 	//tietokannan osoite, k‰ytt‰j‰tunnus ja salasana
@@ -215,8 +219,80 @@ public class SQLLevytManager {
 
 		
 	}
+	
+	
+	public static boolean poistaLevy(String esittaja, String levy, String formaatti) {
+		Connection conn = null;
+		Statement stmt = null;
+		
+			
+			
+			JFrame ponnahdus = new JFrame();
+		    UIManager.put("OptionPane.yesButtonText", "Kyll‰");
+		    UIManager.put("OptionPane.noButtonText", "Ei");
+		    int option = JOptionPane.showConfirmDialog(ponnahdus, "Oletko varma, ett‰ haluat poistaa levyn?" , "Vahvista poisto",JOptionPane.YES_NO_OPTION);
+		    if(option==JOptionPane.YES_OPTION) {
+		    	
+		    	try {
+
+					// Luodaan yhteys
+					System.out.println("Connecting to database...");
+					conn = DriverManager.getConnection(URL, USER, PASSWORD);
+					// Suoritetaan SQL kysely
+					stmt = conn.createStatement();
+					stmt.execute("DELETE FROM `levyt`.`levyt` WHERE (`Esitt‰j‰` = \'" + esittaja + "\') and (`Levyn_nimi` = \'" + levy + "\') and (`Formaatti` = \'" +  formaatti + "\');");
+					
+					// K‰yd‰‰n l‰pi tulosjoukko silmukassa
+					//while (rs.next()) {
+					//System.out.println(rs.getString(1) + "  " + rs.getString(2) + "  " + rs.getString(3) + "  " + rs.getString(4) + "  " + rs.getString(5));
+
+					//}
+					
+				
+					// Otetaan mahdolliset virheet kiinni
+		    		} catch (SQLException se) {
+
+		    			se.printStackTrace();
+		    		} catch (Exception e) {
+
+		    			e.printStackTrace();
+		    		} finally {
+		    			// finally block used to close resources
+		    			try {
+		    				if (stmt != null)
+		    					stmt.close();
+		    			} catch (SQLException se2) {
+		    			} // nothing we can do
+		    			try {
+		    				if (conn != null)
+		    					conn.close();
+		    			} catch (SQLException se) {
+		    				se.printStackTrace();
+		    			} // end finally try
+		    			
+		    		}
+		    		ponnahdus.setVisible(false);
+					return true;
+				
+		    }
+		    if(option==JOptionPane.NO_OPTION) {
+		    	ponnahdus.setVisible(false);
+		    	
+		    }
+			
+		    return false;
+		   
+			 
+			
+
+
+	}
+	
 
 }
+
+
+
 
 
 /*

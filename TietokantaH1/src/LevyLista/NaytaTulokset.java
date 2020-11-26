@@ -33,7 +33,7 @@ public class NaytaTulokset extends JFrame{
 
 	// Sarakkeiden nimet
 
-	String[] sarakkeet = { "Teoksen nimi", "Tekijän nimi", "Julkaisuvuosi", "Genre", "Formaatti" };
+	String[] sarakkeet = { "Tekijän nimi", "Levyn nimi", "Julkaisuvuosi", "Genre", "Formaatti" };
 	Object[][] data = {};
 
 	/**
@@ -140,15 +140,15 @@ public class NaytaTulokset extends JFrame{
 		for (int row = 0; row < levyhylly.size(); row++) {
 
 			if (levyhylly.get(row) != null) {
-				// poimitaan tiedot muuttujiin
-				String nimi = levyhylly.get(row).getNimi();
+				// poimitaan tiedot muuttujiin				
 				String tekija = levyhylly.get(row).getTekija();
+				String nimi = levyhylly.get(row).getNimi();
 				int vuosi = levyhylly.get(row).getJulkaisuvuosi();
 				String genre = levyhylly.get(row).getGenre();
 				String formaatti = levyhylly.get(row).getFormaatti();
 				
 				// Lisätään tiedot taulukkoon
-				model.addRow(new Object[] { nimi, tekija, "" + vuosi, genre, formaatti});
+				model.addRow(new Object[] { tekija, nimi, "" + vuosi, genre, formaatti});
 				
 				System.out.println("Lisättiin: "+nimi);
 			}
@@ -164,7 +164,14 @@ public class NaytaTulokset extends JFrame{
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		int[] rows = table.getSelectedRows();
 		for (int i = 0; i < rows.length; i++) {
-			model.removeRow(rows[i] - i);
+			String tekija = (String) model.getValueAt(rows[i], 0);
+			String levy = (String) model.getValueAt(rows[i], 1);
+			String formaatti = (String) model.getValueAt(rows[i], 4);
+			System.out.println("Poista " + tekija + " " + levy + " " + formaatti);
+			boolean poistetaanko = SQLLevytManager.poistaLevy(tekija, levy, formaatti);
+			if(poistetaanko) {
+				model.removeRow(rows[i] - i);
+			}
 		}
 	}
 	

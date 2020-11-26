@@ -80,13 +80,13 @@ public class LisaysIkkuna extends Ikkuna{
 			lblLisaa.setBounds(34, 9, 200, 20);
 			getContentPane().add(lblLisaa);
 
-			JLabel lblLevynNimi = new JLabel("Esittäjä:");
-			lblLevynNimi.setBounds(34, 54, 111, 20);
-			getContentPane().add(lblLevynNimi);
-
-			JLabel lblEsittaja = new JLabel("Nimi:");
-			lblEsittaja.setBounds(34, 99, 111, 20);
+			JLabel lblEsittaja = new JLabel("Esittäjä:");
+			lblEsittaja.setBounds(34, 54, 111, 20);
 			getContentPane().add(lblEsittaja);
+
+			JLabel lblLevynNimi = new JLabel("Nimi:");
+			lblLevynNimi.setBounds(34, 99, 111, 20);
+			getContentPane().add(lblLevynNimi);
 
 			JLabel lblJulkaisuvuosi = new JLabel("Julkaisuvuosi:");
 			lblJulkaisuvuosi.setBounds(34, 144, 111, 20);
@@ -100,15 +100,15 @@ public class LisaysIkkuna extends Ikkuna{
 			lblFormaatti.setBounds(34, 234, 111, 20);
 			getContentPane().add(lblFormaatti);
 
-			nimiKentta = new JTextField();
-			nimiKentta.setBounds(148, 51, 146, 26);
-			getContentPane().add(nimiKentta);
-			nimiKentta.setColumns(10);
-
 			esittajaKentta = new JTextField();
-			esittajaKentta.setColumns(10);
-			esittajaKentta.setBounds(148, 96, 146, 26);
+			esittajaKentta.setBounds(148, 51, 146, 26);
 			getContentPane().add(esittajaKentta);
+			esittajaKentta.setColumns(10);
+
+			nimiKentta = new JTextField();
+			nimiKentta.setColumns(10);
+			nimiKentta.setBounds(148, 96, 146, 26);
+			getContentPane().add(nimiKentta);
 
 			julkaisuKentta = new JTextField();
 			julkaisuKentta.setColumns(10);
@@ -180,8 +180,8 @@ public class LisaysIkkuna extends Ikkuna{
 
 		protected void tallennaLevy() {
 
-			String nimi = nimiKentta.getText();
 			String tekija = esittajaKentta.getText();
+			String nimi = nimiKentta.getText();			
 			String vuosi = julkaisuKentta.getText();
 			String genre = genreKentta.getText();
 			String formaatti = formaattiKentta.getText();
@@ -192,8 +192,8 @@ public class LisaysIkkuna extends Ikkuna{
 			JOptionPane.showMessageDialog(this, "Tallennettu");
 			SQLLevytManager.lataaLevyt();
 			
-			nimiKentta.setText("");
 			esittajaKentta.setText("");
+			nimiKentta.setText("");
 			julkaisuKentta.setText("");
 			genreKentta.setText("");
 			formaattiKentta.setText("");
