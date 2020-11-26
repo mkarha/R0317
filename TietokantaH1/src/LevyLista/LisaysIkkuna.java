@@ -134,9 +134,33 @@ public class LisaysIkkuna extends Ikkuna{
 			});
 			lisaaNappi.setBounds(34, 276, 115, 29);
 			getContentPane().add(lisaaNappi);
+			
+			JButton palaa = new JButton("P‰‰valikkoon");
+			palaa.setBounds(192, 276, 115, 29);
+			getContentPane().add(palaa);
+			palaa.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+
+					// Lis‰‰ kirjan taulukkoon
+					//lisaaLevy();
+					ValintaIkkuna valinta;
+					try {
+						valinta = new ValintaIkkuna();
+						valinta.nayta();
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
+					setVisible(false);
+
+				}
+			});
+			
+			
 
 			JButton poistuNappi = new JButton("Poistu");
-			poistuNappi.setBounds(192, 276, 115, 29);
+			poistuNappi.setBounds(350, 276, 115, 29);
 			getContentPane().add(poistuNappi);
 			poistuNappi.addActionListener(new ActionListener() {
 				@Override

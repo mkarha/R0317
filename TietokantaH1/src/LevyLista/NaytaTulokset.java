@@ -52,7 +52,7 @@ public class NaytaTulokset extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		contentPane.add(scrollPane);
