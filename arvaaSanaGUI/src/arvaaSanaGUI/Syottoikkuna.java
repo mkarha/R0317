@@ -86,7 +86,7 @@ public class Syottoikkuna {
 				}
 				else if (sanat.onkoSanaJoOlemassa(sana)==false) {
 					if(sanat.tallenna()==true) {
-						omasana.setText("Sana lis‰tty onnistuneesti");
+						ohje.setText("Sana lis‰tty onnistuneesti");
 						
 						//Onnistuneen lis‰yksen j‰lkeen m‰‰ritell‰‰n testaa-napin toiminnallisuus
 						testaa.addActionListener(new ActionListener() {

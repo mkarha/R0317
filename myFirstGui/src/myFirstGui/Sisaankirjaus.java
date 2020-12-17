@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -13,13 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class Kayttoliittyma {
+public class Sisaankirjaus {
+	
+	private JFrame ikkuna = new JFrame();
 
-	public static void main(String[] args) {
+	public Sisaankirjaus() {
 		
 		//Luodaan 300x200 pikselin kokoinen pääikkuna, jonka title on "Eka ikkuna"
 		//Sijoitetaan ikkuna keskelle näyttöä
-		JFrame ikkuna = new JFrame();  ikkuna.setSize(300, 200);  
+		  
+		ikkuna.setSize(300, 200);  
 		ikkuna.setTitle("Eka ikkuna");
 		ikkuna.setLocationRelativeTo(null);
 		
@@ -57,7 +62,7 @@ public class Kayttoliittyma {
 		JComponent syoteNimi = new JTextField("");
 		syoteNimi.setSize(150, 30);
 		JComponent tekstiSalasana = new JLabel("Password: ");
-		JComponent salaSyote = new JPasswordField("");
+		JComponent salaSyote = new JPasswordField();
 		salaSyote.setSize(150, 30);
 		JComponent tyhja = new JLabel("");
 		JButton kirjaudu = new JButton("Log in");
@@ -66,6 +71,17 @@ public class Kayttoliittyma {
 		kirjaudu.setSize(40, 30);
 		JButton poistu = new JButton("Quit");
 		kirjaudu.setSize(40, 30);
+		
+		poistu.addActionListener (new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}			
+		});
+		
+		
+		
+		
 		
 		
 		//Lisätään syöttökentät GridLayoutiin
@@ -77,11 +93,16 @@ public class Kayttoliittyma {
 		syottokentat.add(kirjaudu);	
 		syottokentat.add(poistu);
 		syottokentat.add(unohdus);
-				
 		
 		ikkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 		ikkuna.setVisible(true);
-
+		
+	}
+		
+	
+	public JFrame luoIkkuna() {
+		
+		return ikkuna;
 
 	}
 
