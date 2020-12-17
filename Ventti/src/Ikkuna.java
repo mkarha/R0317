@@ -2,6 +2,7 @@ import javax.swing.JFrame;
 
 public class Ikkuna extends JFrame{
 
+	
 	//konstruktori
 	public Ikkuna (int width, int height, String title) {
 		this.setSize(width, height);;

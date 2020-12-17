@@ -31,48 +31,75 @@ public class PelaajatIkkuna extends Ikkuna{
 		
 		//Pneeli pääikkunan komponenttien asemointia varten
 		JPanel paneeli = new JPanel();
-		BoxLayout paneeliAsettelu = new BoxLayout(paneeli, BoxLayout.Y_AXIS); //Komponentit päällekkäin
+		BorderLayout paneeliAsettelu = new BorderLayout();
+		//BoxLayout paneeliAsettelu = new BoxLayout(paneeli, BoxLayout.Y_AXIS); //Komponentit päällekkäin
 		paneeli.setLayout(paneeliAsettelu);
 		
 		//Käyttäjätunnusosio. Käyttäjätunnuksen tulee olla yksilöllinen
 		JLabel kayttajaLabel = new JLabel("Käyttäjätunnus: ");		//Infolabel
+		kayttajaLabel.setBounds(34, 54, 111, 20);
+		getContentPane().add(kayttajaLabel);		
 		kayttaja = new JTextField();								//Tekstikenttä tietoja varten
+		kayttaja.setColumns(15);
+		kayttaja.setBounds(148, 51, 146, 26);
+		getContentPane().add(kayttaja);
+		
+		/*
 		JPanel kayttajaPaneeli = new JPanel();						//Asettelupaneeli
 		BorderLayout kayttajaPaneeliAsettelu = new BorderLayout();	//Asemointityyli
 		kayttajaPaneeli.setLayout(kayttajaPaneeliAsettelu);			//Asetetaan tyyli paneeliin
 		kayttajaPaneeli.add(kayttajaLabel, BorderLayout.WEST);		//Label vasempaan reunaan
 		kayttajaPaneeli.add(kayttaja, BorderLayout.CENTER);			//syöttökenttä keskelle
-		kayttajaPaneeli.setBorder(new EmptyBorder(20, 50, 20, 50));	//Tyhjää reunoille
+		kayttajaPaneeli.setBorder(new EmptyBorder(20,100, 20, 100));	//Tyhjää reunoille
+		*/
 		
 		//Nimiosio
 		JLabel nimiLabel = new JLabel("Nimi: ");
+		nimiLabel.setBounds(34, 99, 111, 20);
+		getContentPane().add(nimiLabel);
 		nimi = new JTextField();
+		nimi.setColumns(15);
+		nimi.setBounds(148, 96, 146, 26);
+		getContentPane().add(nimi);
+		/*
 		JPanel nimiPaneeli = new JPanel();
 		BorderLayout nimiPaneeliAsettelu = new BorderLayout();
 		nimiPaneeli.setLayout(nimiPaneeliAsettelu);
 		nimiPaneeli.add(nimiLabel, BorderLayout.WEST);
 		nimiPaneeli.add(nimi, BorderLayout.CENTER);
 		nimiPaneeli.setBorder(new EmptyBorder(20, 50, 20, 50));
+		*/
 		
 		//Pelaajan ikonikuvan osoite. Ikonikuvan kooksi määritellään jotain myöhemmin
-		JLabel kuvaLabel = new JLabel("Pelaajaikonikuvan osoite: ");
+		JLabel kuvaLabel = new JLabel("Kuvan sijainti: ");
+		kuvaLabel.setBounds(34, 144, 111, 20);
+		getContentPane().add(kuvaLabel);
 		kuva = new JTextField();
-		JPanel kuvaPaneeli = new JPanel();
+		kuva.setColumns(15);
+		kuva.setBounds(148, 141, 146, 26);
+		getContentPane().add(kuva);
+		/*JPanel kuvaPaneeli = new JPanel();
 		BorderLayout kuvaPaneeliAsettelu = new BorderLayout();
 		kuvaPaneeli.setLayout(kuvaPaneeliAsettelu);
 		kuvaPaneeli.add(kuvaLabel, BorderLayout.WEST);
 		kuvaPaneeli.add(kuva, BorderLayout.CENTER);
 		kuvaPaneeli.setBorder(new EmptyBorder(20, 50, 20,50));
+		*/
 		
 		//Pelaajan pelivaluutan määrä. Alkuvaiheessa kaikille tervetuliaisbonuksena 50 raha
 		JLabel rahaLabel = new JLabel("Rahatalletus: ");
-		JLabel raha = new JLabel("Saat 50 rahaa tervetuliaisbonuksena");
-		JPanel rahaPaneeli = new JPanel();
+		rahaLabel.setBounds(34, 189, 111, 20);
+		getContentPane().add(rahaLabel);
+		JLabel raha = new JLabel("Saat 50 rahaa tervetuliaisbonuksena");		
+		raha.setBounds(148, 189, 146, 20);	
+		getContentPane().add(raha);
+		/*JPanel rahaPaneeli = new JPanel();
 		BorderLayout rahaPaneeliAsettelu = new BorderLayout();
 		rahaPaneeli.setLayout(rahaPaneeliAsettelu);
 		rahaPaneeli.add(rahaLabel, BorderLayout.WEST);
 		rahaPaneeli.add(raha, BorderLayout.CENTER);
 		rahaPaneeli.setBorder(new EmptyBorder(20, 50, 20, 50));
+		*/
 		
 		//Alareunan napit
 		JButton lataa = new JButton("Lataa pelaaja");									//Käyttäjä voi ladata tallennetun hahmon käyttäjätunnuksella
@@ -86,6 +113,7 @@ public class PelaajatIkkuna extends Ikkuna{
 		nappiPaneeli.add(lataa);
 		nappiPaneeli.add(tallenna);
 		nappiPaneeli.add(pelaaTallentamatta);
+		nappiPaneeli.setBorder(new EmptyBorder(0, 75, 0, 0));
 
 		//Luodaan syöttökenttien toiminnallisuus lisäämällä KeyListener	
 		kayttaja.addKeyListener
@@ -165,12 +193,8 @@ public class PelaajatIkkuna extends Ikkuna{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int key = KeyEvent.VK_ENTER;						//Otetaan viimeinen kirjain syöttökentästä talteen näppäilemällä loppuun enter
-				pelaaja = new Pelaaja(lueKirjain(kayttaja, key));
-				//pelaaja.setKayttaja(lueKirjain(kayttaja, key));	//Käydään kunkin tekstikentän syöte läpi enterin kanssa
-				//pelaaja.setNimi(lueKirjain(nimi, key));
-				//pelaaja.setKuva("girlplayer.jpg");
+				pelaaja = new Pelaaja(lueKirjain(kayttaja, key));	//Käydään käyttäjätunnus-tekstikentän syöte läpi enterin kanssa
 				pelaaja.setRaha(50);							//Asetetaan rahamäärä
-				//pelaaja.tallennaPelaaja(pelaaja);			//Talletetaan hahmon tiedot tiedostoon
 				pelaaja.setMonesko(monesko);
 				JFrame ponnahdus = new JFrame();
 			    UIManager.put("OptionPane.yesButtonText", "F");
@@ -188,9 +212,7 @@ public class PelaajatIkkuna extends Ikkuna{
 				jatketaan(monesko, lkm, pelaajaTunnukset);				
 			}			
 		});
-		
-		
-		//poistu
+
 		poistu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -202,11 +224,11 @@ public class PelaajatIkkuna extends Ikkuna{
 		
 		
 		//lisätään määritellyt alapaneelit päänäytölle
-		paneeli.add(kayttajaPaneeli);
+		/*paneeli.add(kayttajaPaneeli);
 		paneeli.add(nimiPaneeli);
 		paneeli.add(kuvaPaneeli);
-		paneeli.add(rahaPaneeli);
-		paneeli.add(nappiPaneeli);
+		paneeli.add(rahaPaneeli);*/
+		paneeli.add(nappiPaneeli, BorderLayout.SOUTH);
 		
 		this.add(paneeli);
 	}
@@ -221,11 +243,9 @@ public class PelaajatIkkuna extends Ikkuna{
 		String syote;
         if (key == KeyEvent.VK_ENTER) {
         	syote = textF.getText().replace("\n", "");
-        	System.out.println("enterpuoli " + syote);
         	textF.setText(syote);
         }else {
         	syote = textF.getText();
-        	System.out.println("toinen puoli: " + syote);
         }
         return syote;
 	}

@@ -65,7 +65,6 @@ public class PeliIkkuna extends Ikkuna{
 		//k‰yd‰‰n l‰pi kaikki alkiot
 		for (int i=0; i<this.pelaajat.size(); i++) {
 			pTunnus = this.pelaajat.get(i);		//haetaan pelaajatunnus String-muodossa
-			System.out.println("ptunnus: " + pTunnus.getKayttaja());
 			if(pTunnus.getKayttaja().equals("Jakaja")) {					//jos pelaajatunnus on jakaja
 				jakaja = this.pelaajat.get(i);					//asetetaan jakajaksi i:nnen alkion nimi
 				Kasi jakajanKasi = peli.getPelaajanKasi(jakaja);
@@ -187,8 +186,9 @@ public class PeliIkkuna extends Ikkuna{
 					peli.alustus();
 					sulje();
 					peli.naytaPeli();	
+				}else {
+				 peli.nostaKortti();
 				}
-				peli.nostaKortti();	
 			}			
 		});
 	

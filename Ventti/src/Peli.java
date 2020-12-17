@@ -117,8 +117,6 @@ public class Peli {
 		this.kasi = this.pelaajienKadet.get(this.pelaaja.getMonesko());				//ladataan kierroksen pelaajan käsi päivitettynä
 		this.peliIkkuna.tulosPaivitys(""+getSyote(this.kasi.getArvo()));
 		
-		System.out.println("Pelaajan " + this.pelaaja.getKayttaja() + ", Käden arvo " + this.kasi.getArvo());
-		
 		//mikäli päivitetyn käden arvo on yli 21 vaihdetaan vuoroa
 		if (this.kasi.getArvo()>21) {
 				lopetaVuoro();
@@ -145,7 +143,7 @@ public class Peli {
 				if (vuoro == 0 || this.kiertavat.get(0).getKayttaja().equals("Jakaja")) {
 					this.isoinPelaaja = this.kiertavat.get(0).getKayttaja();
 				}else {
-					this.isoinPelaaja += " ja " + this.pelaajat.get(0);
+					this.isoinPelaaja += " ja " + this.pelaajat.get(0).getKayttaja();
 				}
 			}
 		
@@ -161,6 +159,10 @@ public class Peli {
 			this.kiertavat.add(this.kiertavat.get(0));			
 			this.kiertavat.remove(0);
 			this.monesko = 0;
+			
+			korttiRuutujenTyhjennys();
+			
+			/*
        		for (int i=0; i<korttiRuudut.size(); i++) {
        			ImageIcon kuva = null;
        			try { //yritetään ladata tyhjä kuva
@@ -176,6 +178,7 @@ public class Peli {
        			
        			
        		}  
+       		*/
        		
        		if (this.kiertavat.get(0).getKayttaja().equals("Jakaja")) {
        			jakajanVuoro();
@@ -184,9 +187,30 @@ public class Peli {
        		peliIkkuna.sulje();
        		peliIkkuna = new PeliIkkuna(1280, 800, "Ventti", kiertavat, korttiRuudut, this);
     		naytaPeli();
-		}
-		
-		
+		}	
+	}
+	
+	
+	/*Korttiruutujen tyhjennys vuoron vaihtuessa ja 
+	 * pelin lopussa uuden pelin mahdollisuutta varten
+	 */
+	
+	public void korttiRuutujenTyhjennys() {
+		for (int i=0; i<korttiRuudut.size(); i++) {
+   			ImageIcon kuva = null;
+   			try { //yritetään ladata tyhjä kuva
+   				kuva = new ImageIcon(this.getClass().getResource("/kuvat/tyhja.png"));
+   			}
+   			catch (Exception e) {
+   				
+   			}
+   			JLabel label = new JLabel(kuva);
+   			label.setBorder(new EmptyBorder(50, 20, 50, 10));
+   			korttiRuudut.remove(0);
+   			korttiRuudut.add(label);
+   			
+   			
+   		}  
 	}
 	
 	
@@ -198,7 +222,6 @@ public class Peli {
 	 * Lopuksi käynnistetään voittaja-metodi.
 	 */
 		public void jakajanVuoro() {
-			System.out.println("Jakan vuoro metodin alku");		
 			if (this.isoinArvo == 0) {
 				nostaKortti();
 			}else {
@@ -238,6 +261,7 @@ public class Peli {
 		    JFrame ponnahdus = new JFrame();
 		    JOptionPane.showMessageDialog(ponnahdus, pelaaja + " voitti!", "Onneksi olkoon!",JOptionPane.DEFAULT_OPTION);
 			ponnahdus.setVisible(false); 
+			korttiRuutujenTyhjennys();
    			
 		}
 		

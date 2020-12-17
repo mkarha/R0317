@@ -16,6 +16,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>kokoelma.jpg</name>
+			<type>1</type>
+			<location>D:/Ohjelmoinnit/R0317/TietokantaH1/src/LevyLista/kuvat/kokoelma.jpg</location>
+		</link>
+		<link>
 			<name>src/kuvat</name>
 			<type>2</type>
 			<location>D:/Ohjelmoinnit/R0317/Ventti/src/kuvat</location>
